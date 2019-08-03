@@ -123,6 +123,11 @@ VLCLibrary >> initializeVLC [
 	^ self ffiCall: 'void * libvlc_new();'
 ]
 
+{ #category : #'media list' }
+VLCLibrary >> insertInMediaList: aMediaList media: aMedia atIndex: anIndex [
+	^ self ffiCall: 'int libvlc_media_list_insert_media (void * aMediaList, void * aMedia, int anIndex)'
+]
+
 { #category : #'media list player' }
 VLCLibrary >> isListPlayerPlaying: aListPlayer [
 	^ self ffiCall: 'bool libvlc_media_list_player_is_playing (void* aListPlayer)'

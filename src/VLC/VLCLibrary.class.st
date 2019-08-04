@@ -123,6 +123,28 @@ VLCLibrary >> initializeVLC [
 	^ self ffiCall: 'void * libvlc_new();'
 ]
 
+{ #category : #initialization }
+VLCLibrary >> initializeVLCWithArguments: aCollectionOfString [
+	"colArguments := OrderedCollection new.
+	colArguments add: '--novideo'.
+	vlc := VLCLibrary uniqueInstance initializeVLCWithArguments: colArguments.
+	media := vlc mediaFileFromStringLocation: 'https://s6.onlinevideoconverter.com/download?file=d3a0d3e4a0c2f5'.	
+	player := vlc createPlayerForMedia: media.
+	vlc playMediaPlayer: player.
+	vlc pauseMediaPlayer: player.
+	vlc isMediaPlayerPlaying: player"
+
+	| externalArray |
+	externalArray := (FFIExternalArray externalNewType: 'void*' size: aCollectionOfString size) autoRelease.
+	aCollectionOfString withIndexDo: [ :string :index | externalArray at: index put: (ExternalAddress fromString: string) autoRelease ].
+	libVLCInstance := self initializeVLCWithArguments: externalArray getHandle andNumberOfArgs: aCollectionOfString size.
+]
+
+{ #category : #initialization }
+VLCLibrary >> initializeVLCWithArguments: aCollectionOfString andNumberOfArgs: sizeOfCollectionOfString [
+	^ self ffiCall: 'void * libvlc_new(int sizeOfCollectionOfString, void * aCollectionOfString);'
+]
+
 { #category : #'media list' }
 VLCLibrary >> insertInMediaList: aMediaList media: aMedia atIndex: anIndex [
 	^ self ffiCall: 'int libvlc_media_list_insert_media (void * aMediaList, void * aMedia, int anIndex)'
@@ -148,6 +170,18 @@ VLCLibrary >> isMediaPlayerPlaying: aMediaPlayer [
 { #category : #'accessing platform' }
 VLCLibrary >> libraryName [
 	^ 'libvlc.so'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaFileFromFileDescriptor: fileDescriptor [
+	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
+	^ self ffiCall: 'void* libvlc_media_new_fd(void* libVLCInstance, int fileDescriptor);'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaFileFromStringLocation: aLocation [
+	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
+	^ self ffiCall: 'void* libvlc_media_new_location (void * libVLCInstance, String aLocation);'
 ]
 
 { #category : #media }
@@ -202,7 +236,7 @@ VLCLibrary >> playMediaPlayer: aMediaPlayer [
 	player := vlc createPlayerForMedia: media.
 	vlc playMediaPlayer: player
 	"
-	^ self ffiCall: 'void * libvlc_media_player_play(void* aMediaPlayer);'
+	^ self ffiCall: 'int libvlc_media_player_play(void* aMediaPlayer);'
 ]
 
 { #category : #'media player' }
@@ -237,6 +271,11 @@ VLCLibrary >> resetMediaPlayer: aMediaPlayer [
 { #category : #'media list player' }
 VLCLibrary >> setMediaList: aMediaList forListPlayer: aListPlayer [
 	^ self ffiCall: 'void* libvlc_media_list_player_set_media_list (void* aListPlayer, void* aMediaList)'
+]
+
+{ #category : #'media player' }
+VLCLibrary >> setXWindows: indentifier forMediaPlayer: aMediaPlayer [
+	^ self ffiCall: 'void libvlc_media_player_set_xwindow(void* aMediaPlayer, int indentifier);'
 ]
 
 { #category : #'accessing platform' }

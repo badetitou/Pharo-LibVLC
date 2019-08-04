@@ -1,3 +1,6 @@
+"
+When you use me, I automatically create one VLCInstance.. but you can create other with #createVLCInstance or #createVLCWithArguments:
+"
 Class {
 	#name : #VLCLibrary,
 	#superclass : #FFILibrary,
@@ -55,12 +58,22 @@ VLCLibrary >> attachToEventManager: anEventManager forEvent: aTypeOfEvent withCa
 
 { #category : #'media list player' }
 VLCLibrary >> createListPlayer [
-	^ self ffiCall: 'void* libvlc_media_list_player_new(void* libVLCInstance)'
+	^ self createListPlayerForInstance: libVLCInstance
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> createListPlayerForInstance: anInstance [
+	^ self ffiCall: 'void* libvlc_media_list_player_new(void* anInstance)'
 ]
 
 { #category : #'media list' }
 VLCLibrary >> createMediaList [
-	^ self ffiCall: 'void* libvlc_media_list_new(void* libVLCInstance)'
+	^ self createMediaListFromInstance: libVLCInstance
+]
+
+{ #category : #'media list' }
+VLCLibrary >> createMediaListFromInstance: aVLCInstance [
+	^ self ffiCall: 'void* libvlc_media_list_new(void* aVLCInstance)'
 ]
 
 { #category : #'media player' }
@@ -74,6 +87,28 @@ VLCLibrary >> createPlayerForMedia: aVLCMedia [
 	"
 
 	^ self ffiCall: 'void* libvlc_media_player_new_from_media(void* aVLCMedia);'
+]
+
+{ #category : #initialization }
+VLCLibrary >> createVLCInstance [
+	^ self ffiCall: 'void * libvlc_new();'
+]
+
+{ #category : #initialization }
+VLCLibrary >> createVLCWithArguments: aCollectionOfString [
+	"colArguments := OrderedCollection new.
+	colArguments add: '--novideo'.
+	vlc := VLCLibrary uniqueInstance initializeVLCWithArguments: colArguments.
+	media := vlc mediaFileFromStringLocation: 'https://s6.onlinevideoconverter.com/download?file=d3a0d3e4a0c2f5'.	
+	player := vlc createPlayerForMedia: media.
+	vlc playMediaPlayer: player.
+	vlc pauseMediaPlayer: player.
+	vlc isMediaPlayerPlaying: player"
+
+	| externalArray |
+	externalArray := (FFIExternalArray externalNewType: 'void*' size: aCollectionOfString size) autoRelease.
+	aCollectionOfString withIndexDo: [ :string :index | externalArray at: index put: (ExternalAddress fromString: string) autoRelease ].
+	^ self initializeVLCWithArguments: externalArray getHandle andNumberOfArgs: aCollectionOfString size.
 ]
 
 { #category : #'event manager' }
@@ -115,12 +150,7 @@ VLCLibrary >> getMediaInsideMediaPlayer: aMediaPlayer [
 { #category : #initialization }
 VLCLibrary >> initialize [
 	super initialize.
-	libVLCInstance := self initializeVLC
-]
-
-{ #category : #initialization }
-VLCLibrary >> initializeVLC [
-	^ self ffiCall: 'void * libvlc_new();'
+	libVLCInstance := self createVLCInstance
 ]
 
 { #category : #initialization }
@@ -173,21 +203,36 @@ VLCLibrary >> libraryName [
 ]
 
 { #category : #media }
-VLCLibrary >> mediaFileFromFileDescriptor: fileDescriptor [
+VLCLibrary >> mediaFileForInstance: aVLCInstance fromFileDescriptor: fileDescriptor [
+	^ self ffiCall: 'void* libvlc_media_new_fd(void* aVLCInstance, int fileDescriptor);'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringLocation: aLocation [
+	^ self ffiCall: 'void* libvlc_media_new_location (void * aVLCInstance, String aLocation);'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringPath: aStringPath [
 	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
-	^ self ffiCall: 'void* libvlc_media_new_fd(void* libVLCInstance, int fileDescriptor);'
+	^ self ffiCall: 'void* libvlc_media_new_path(void* aVLCInstance, String aStringPath);'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaFileFromFileDescriptor: fileDescriptor [
+	 ^ self mediaFileForInstance: libVLCInstance fromFileDescriptor: fileDescriptor 
 ]
 
 { #category : #media }
 VLCLibrary >> mediaFileFromStringLocation: aLocation [
 	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
-	^ self ffiCall: 'void* libvlc_media_new_location (void * libVLCInstance, String aLocation);'
+	^ self mediaFileForInstance: libVLCInstance fromStringLocation: aLocation 
 ]
 
 { #category : #media }
 VLCLibrary >> mediaFileFromStringPath: aStringPath [
 	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
-	^ self ffiCall: 'void* libvlc_media_new_path(void* libVLCInstance, String aStringPath);'
+	^ self mediaFileForInstance: libVLCInstance fromStringPath: aStringPath
 ]
 
 { #category : #'media list player' }

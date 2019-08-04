@@ -1,12 +1,11 @@
 "
-When you use me, I automatically create one VLCInstance.. but you can create other with #createVLCInstance or #createVLCWithArguments:
+When you use me: 
+
+1. create an instance of me with #createVLCInstance or #createVLCWithArguments:
 "
 Class {
 	#name : #VLCLibrary,
 	#superclass : #FFILibrary,
-	#instVars : [
-		'libVLCInstance'
-	],
 	#category : #'VLC-Library'
 }
 
@@ -57,18 +56,8 @@ VLCLibrary >> attachToEventManager: anEventManager forEvent: aTypeOfEvent withCa
 ]
 
 { #category : #'media list player' }
-VLCLibrary >> createListPlayer [
-	^ self createListPlayerForInstance: libVLCInstance
-]
-
-{ #category : #'media list player' }
 VLCLibrary >> createListPlayerForInstance: anInstance [
 	^ self ffiCall: 'void* libvlc_media_list_player_new(void* anInstance)'
-]
-
-{ #category : #'media list' }
-VLCLibrary >> createMediaList [
-	^ self createMediaListFromInstance: libVLCInstance
 ]
 
 { #category : #'media list' }
@@ -150,24 +139,6 @@ VLCLibrary >> getMediaInsideMediaPlayer: aMediaPlayer [
 { #category : #initialization }
 VLCLibrary >> initialize [
 	super initialize.
-	libVLCInstance := self createVLCInstance
-]
-
-{ #category : #initialization }
-VLCLibrary >> initializeVLCWithArguments: aCollectionOfString [
-	"colArguments := OrderedCollection new.
-	colArguments add: '--novideo'.
-	vlc := VLCLibrary uniqueInstance initializeVLCWithArguments: colArguments.
-	media := vlc mediaFileFromStringLocation: 'https://s6.onlinevideoconverter.com/download?file=d3a0d3e4a0c2f5'.	
-	player := vlc createPlayerForMedia: media.
-	vlc playMediaPlayer: player.
-	vlc pauseMediaPlayer: player.
-	vlc isMediaPlayerPlaying: player"
-
-	| externalArray |
-	externalArray := (FFIExternalArray externalNewType: 'void*' size: aCollectionOfString size) autoRelease.
-	aCollectionOfString withIndexDo: [ :string :index | externalArray at: index put: (ExternalAddress fromString: string) autoRelease ].
-	libVLCInstance := self initializeVLCWithArguments: externalArray getHandle andNumberOfArgs: aCollectionOfString size.
 ]
 
 { #category : #initialization }
@@ -216,23 +187,6 @@ VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringLocation: aLocation [
 VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringPath: aStringPath [
 	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
 	^ self ffiCall: 'void* libvlc_media_new_path(void* aVLCInstance, String aStringPath);'
-]
-
-{ #category : #media }
-VLCLibrary >> mediaFileFromFileDescriptor: fileDescriptor [
-	 ^ self mediaFileForInstance: libVLCInstance fromFileDescriptor: fileDescriptor 
-]
-
-{ #category : #media }
-VLCLibrary >> mediaFileFromStringLocation: aLocation [
-	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
-	^ self mediaFileForInstance: libVLCInstance fromStringLocation: aLocation 
-]
-
-{ #category : #media }
-VLCLibrary >> mediaFileFromStringPath: aStringPath [
-	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
-	^ self mediaFileForInstance: libVLCInstance fromStringPath: aStringPath
 ]
 
 { #category : #'media list player' }

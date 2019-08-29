@@ -34,6 +34,29 @@ VLCLibrary >> addMedia: aMedia inMediaList: aMediaList [
 	^ self ffiCall: 'bool libvlc_media_list_add_media(void* aMediaList, void* aMedia)'
 ]
 
+{ #category : #media }
+VLCLibrary >> addOption: theOption toMedia: aMedia [
+	"full example:
+
+colArguments := OrderedCollection new.
+colArguments add: '--no-video'.
+vlc := VLCLibrary uniqueInstance createVLCWithArguments: colArguments.
+
+mediaList := VLCLibrary uniqueInstance createMediaListFromInstance: vlc.
+media := VLCLibrary uniqueInstance mediaFileForInstance: vlc fromStringPath: '/home/badetitou/myVideo.mkv'.
+VLCLibrary uniqueInstance addMedia: media inMediaList: mediaList.
+
+VLCLibrary uniqueInstance addOption: ':sout=#transcode{vcodec=h264,vb=150,acodec=mp4a,ab=50,mono,channels=1}:standard{mux=ts,dst=:8484/vlc_stream.mp4,access=http}' toMedia: media.
+
+mediaListPlayer := VLCLibrary uniqueInstance createListPlayerForInstance: vlc.
+VLCLibrary uniqueInstance setMediaList: mediaList forListPlayer: mediaListPlayer.
+VLCLibrary uniqueInstance playListPlayer: mediaListPlayer."
+	
+	| optionString |
+	optionString := ExternalAddress fromString: theOption.
+	^ self vlcAddOption: optionString toMedia: aMedia
+]
+
 { #category : #'event manager' }
 VLCLibrary >> attachToEventManager: anEventManager forEvent: aTypeOfEvent withCallback: aCallbackMethod andData: dataWeWantToCarryWithTheEvent [
 	"
@@ -302,4 +325,9 @@ VLCLibrary >> unixModuleName [
 	"Kept for backward compatibility. 
 	 Users should use unix32* or unix64*"
 	^ self unix64ModuleName
+]
+
+{ #category : #'private - media' }
+VLCLibrary >> vlcAddOption: theOption toMedia: aMedia [
+	^ self ffiCall: 'void* libvlc_media_add_option(void* aMedia, void * theOption);'
 ]

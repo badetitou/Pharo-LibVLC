@@ -300,6 +300,11 @@ VLCLibrary >> setXWindows: indentifier forMediaPlayer: aMediaPlayer [
 	^ self ffiCall: 'void libvlc_media_player_set_xwindow(void* aMediaPlayer, int indentifier);'
 ]
 
+{ #category : #'media list player' }
+VLCLibrary >> stopListPlayer: aListPlayer [
+	^ self ffiCall: 'void * libvlc_media_list_player_stop (void* aListPlayer)'
+]
+
 { #category : #'accessing platform' }
 VLCLibrary >> unix32ModuleName [
 	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')

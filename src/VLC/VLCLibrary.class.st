@@ -339,5 +339,5 @@ VLCLibrary >> vlcAddOption: theOption toMedia: aMedia [
 
 { #category : #'accessing platform' }
 VLCLibrary >> win32ModuleName [ 
-	^ 'C:\Program Files\VideoLAN\VLC\libvlc.dll'
+	^ 'libvlc.dll'
 ]

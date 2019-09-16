@@ -336,3 +336,8 @@ VLCLibrary >> unixModuleName [
 VLCLibrary >> vlcAddOption: theOption toMedia: aMedia [
 	^ self ffiCall: 'void* libvlc_media_add_option(void* aMedia, void * theOption);'
 ]
+
+{ #category : #'accessing platform' }
+VLCLibrary >> win32ModuleName [ 
+	^ 'C:\Program Files\VideoLAN\VLC\libvlc.dll'
+]

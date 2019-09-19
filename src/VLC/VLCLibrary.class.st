@@ -78,6 +78,11 @@ VLCLibrary >> attachToEventManager: anEventManager forEvent: aTypeOfEvent withCa
 )	'
 ]
 
+{ #category : #'media list' }
+VLCLibrary >> countMediaIn: aMediaList [
+	^ self ffiCall: 'int libvlc_media_list_count (void * aMediaList)'
+]
+
 { #category : #'media list player' }
 VLCLibrary >> createListPlayerForInstance: anInstance [
 	^ self ffiCall: 'void* libvlc_media_list_player_new(void* anInstance)'

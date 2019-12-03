@@ -103,7 +103,7 @@ VLCLibrary >> createPlayerForMedia: aVLCMedia [
 
 { #category : #initialization }
 VLCLibrary >> createVLCInstance [
-	^ self ffiCall: 'void * libvlc_new();'
+	^ self ffiCall: 'void * libvlc_new()'
 ]
 
 { #category : #initialization }
@@ -189,11 +189,6 @@ VLCLibrary >> isMediaPlayerPlaying: aMediaPlayer [
 	vlc isMediaPlayerPlaying: aMediaPlayer
 	"
 	^ self ffiCall: 'bool libvlc_media_player_is_playing(void* aMediaPlayer);'
-]
-
-{ #category : #'accessing platform' }
-VLCLibrary >> libraryName [
-	^ 'libvlc.so'
 ]
 
 { #category : #media }
@@ -306,30 +301,23 @@ VLCLibrary >> stopListPlayer: aListPlayer [
 ]
 
 { #category : #'accessing platform' }
-VLCLibrary >> unix32ModuleName [
+VLCLibrary >> unix32LibraryName [
 	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')
 		do: [ :path | 
 			| libraryPath |
-			libraryPath := path asFileReference / self libraryName.
+			libraryPath := path asFileReference / 'libvlc.so'.
 			libraryPath exists ifTrue: [ ^ libraryPath fullName ] ].
-	self error: 'Cannot locate cairo library. Please check if it installed on your system'
+	self error: 'Cannot locate vlc library. Please check if it installed on your system'
 ]
 
 { #category : #'accessing platform' }
-VLCLibrary >> unix64ModuleName [
+VLCLibrary >> unix64LibraryName [
 	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')
 		do: [ :path | 
 			| libraryPath |
-			libraryPath := path asFileReference / self libraryName.
+			libraryPath := path asFileReference / 'libvlc.so'.
 			libraryPath exists ifTrue: [ ^ libraryPath fullName ] ].
-	self error: 'Cannot locate cairo library. Please check if it installed on your system'
-]
-
-{ #category : #'accessing platform' }
-VLCLibrary >> unixModuleName [
-	"Kept for backward compatibility. 
-	 Users should use unix32* or unix64*"
-	^ self unix64ModuleName
+	self error: 'Cannot locate vlc library. Please check if it installed on your system'
 ]
 
 { #category : #'private - media' }
@@ -338,6 +326,6 @@ VLCLibrary >> vlcAddOption: theOption toMedia: aMedia [
 ]
 
 { #category : #'accessing platform' }
-VLCLibrary >> win32ModuleName [ 
+VLCLibrary >> win32LibraryName [
 	^ 'libvlc.dll'
 ]

@@ -332,5 +332,10 @@ VLCLibrary >> vlcAddOption: theOption toMedia: aMedia [
 
 { #category : #'accessing platform' }
 VLCLibrary >> win32LibraryName [
-	^ 'libvlc.dll'
+	((OSEnvironment current at: 'Path' ifAbsent: [ '' ]) substrings: ';')
+		do: [ :path | 
+			| libraryPath |
+			libraryPath := path asFileReference / 'libvlc.dll'.
+			libraryPath exists ifTrue: [ ^ libraryPath fullName ] ].
+	self error: 'Cannot locate vlc library. Please check if it installed on your system'
 ]

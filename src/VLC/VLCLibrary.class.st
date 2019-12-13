@@ -11,11 +11,10 @@ Class {
 
 { #category : #'class initialization' }
 VLCLibrary class >> initialize [
-	"Required to reset the Initialized flag on image startup.
-	Force libgit initialization since we just installed libgit.
-	Otherwise this would cause a libgit crash"
-	
+	"reset me when startup"
 	Smalltalk addToStartUpList: self.
+	"We need to load LibraryCore before using this one"
+	VLCLibraryCore uniqueInstance 
 ]
 
 { #category : #initialization }
@@ -162,6 +161,12 @@ VLCLibrary >> getCurrentMediaPlayerOfListPlayer: aListPlayer [
 { #category : #'media player' }
 VLCLibrary >> getMediaInsideMediaPlayer: aMediaPlayer [
 	^ self ffiCall: 'void * libvlc_media_player_get_media(void* aMediaPlayer);'
+]
+
+{ #category : #meta }
+VLCLibrary >> getVersion [
+
+	^ self ffiCall: 'String libvlc_get_version()'
 ]
 
 { #category : #initialization }
@@ -332,7 +337,7 @@ VLCLibrary >> vlcAddOption: theOption toMedia: aMedia [
 
 { #category : #'accessing platform' }
 VLCLibrary >> win32LibraryName [
-	((OSEnvironment current at: 'Path' ifAbsent: [ '' ]) substrings: ';')
+	((OSEnvironment current at: 'Path' ifAbsent: [ '' ]) substrings: ';'), {'C:\Program Files\VideoLAN\VLC'}
 		do: [ :path | 
 			| libraryPath |
 			libraryPath := path asFileReference / 'libvlc.dll'.

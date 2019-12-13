@@ -20,6 +20,26 @@ VLCLibraryCore >> initialize [
 ]
 
 { #category : #'accessing platform' }
+VLCLibraryCore >> unix32LibraryName [
+	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')
+		do: [ :path | 
+			| libraryPath |
+			libraryPath := path asFileReference / 'libvlccore.so'.
+			libraryPath exists ifTrue: [ ^ libraryPath fullName ] ].
+	self error: 'Cannot locate vlc library. Please check if it installed on your system'
+]
+
+{ #category : #'accessing platform' }
+VLCLibraryCore >> unix64LibraryName [
+	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')
+		do: [ :path | 
+			| libraryPath |
+			libraryPath := path asFileReference / 'libvlccore.so'.
+			libraryPath exists ifTrue: [ ^ libraryPath fullName ] ].
+	self error: 'Cannot locate vlc library. Please check if it installed on your system'
+]
+
+{ #category : #'accessing platform' }
 VLCLibraryCore >> win32LibraryName [
 	((OSEnvironment current at: 'Path' ifAbsent: [ '' ]) substrings: ';') , { 'C:\Program Files\VideoLAN\VLC' } do: [ :path | 
 		| libraryPath |

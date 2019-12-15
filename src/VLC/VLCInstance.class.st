@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #creation }
+VLCInstance >> createMediaFromPath: aPath [
+	"self createMediaFromPath: '/home/badetitou/Musique/Coda.mp3'"
+	^ VLCLibrary uniqueInstance mediaNew: self path: aPath
+]
+
+{ #category : #creation }
 VLCInstance >> createMediaListPlayer [
 	^ VLCLibrary uniqueInstance mediaListPlayerNew: self
 ]

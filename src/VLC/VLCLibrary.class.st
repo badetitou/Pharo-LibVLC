@@ -33,34 +33,6 @@ VLCLibrary >> addIntfTo: aLIBVLCInstance named: name [
 	^ self ffiCall: 'void libvlc_release (VLCInstance * aLIBVLCInstance, String name)'
 ]
 
-{ #category : #'media list' }
-VLCLibrary >> addMedia: aMedia inMediaList: aMediaList [
-	^ self ffiCall: 'bool libvlc_media_list_add_media(void* aMediaList, void* aMedia)'
-]
-
-{ #category : #media }
-VLCLibrary >> addOption: theOption toMedia: aMedia [
-	"full example:
-
-colArguments := OrderedCollection new.
-colArguments add: '--no-video'.
-vlc := VLCLibrary uniqueInstance createVLCWithArguments: colArguments.
-
-mediaList := VLCLibrary uniqueInstance createMediaListFromInstance: vlc.
-media := VLCLibrary uniqueInstance mediaFileForInstance: vlc fromStringPath: '/home/badetitou/myVideo.mkv'.
-VLCLibrary uniqueInstance addMedia: media inMediaList: mediaList.
-
-VLCLibrary uniqueInstance addOption: ':sout=#transcode{vcodec=h264,vb=150,acodec=mp4a,ab=50,mono,channels=1}:standard{mux=ts,dst=:8484/vlc_stream.mp4,access=http}' toMedia: media.
-
-mediaListPlayer := VLCLibrary uniqueInstance createListPlayerForInstance: vlc.
-VLCLibrary uniqueInstance setMediaList: mediaList forListPlayer: mediaListPlayer.
-VLCLibrary uniqueInstance playListPlayer: mediaListPlayer."
-	
-	| optionString |
-	optionString := ExternalAddress fromString: theOption.
-	^ self vlcAddOption: optionString toMedia: aMedia
-]
-
 { #category : #'event manager' }
 VLCLibrary >> attachToEventManager: anEventManager forEvent: aTypeOfEvent withCallback: aCallbackMethod andData: dataWeWantToCarryWithTheEvent [
 	"
@@ -91,16 +63,6 @@ The unit is the microsecond. Time increases monotonically (regardless of time zo
 Note
 On systems that support it, the POSIX monotonic clock is used."
 	^ self ffiCall: 'int64 libvlc_clock(void)	'
-]
-
-{ #category : #'media list' }
-VLCLibrary >> countMediaIn: aMediaList [
-	^ self ffiCall: 'int libvlc_media_list_count (void * aMediaList)'
-]
-
-{ #category : #'media list' }
-VLCLibrary >> createMediaListFromInstance: aVLCInstance [
-	^ self ffiCall: 'void* libvlc_media_list_new(void* aVLCInstance)'
 ]
 
 { #category : #'media player' }
@@ -211,11 +173,6 @@ VLCLibrary >> initializeVLCWithArguments: aCollectionOfString andNumberOfArgs: s
 	^ self ffiCall: 'void * libvlc_new(int sizeOfCollectionOfString, void * aCollectionOfString);'
 ]
 
-{ #category : #'media list' }
-VLCLibrary >> insertInMediaList: aMediaList media: aMedia atIndex: anIndex [
-	^ self ffiCall: 'int libvlc_media_list_insert_media (void * aMediaList, void * aMedia, int anIndex)'
-]
-
 { #category : #'media player' }
 VLCLibrary >> isMediaPlayerPlaying: aMediaPlayer [
 	"
@@ -229,19 +186,164 @@ VLCLibrary >> isMediaPlayerPlaying: aMediaPlayer [
 ]
 
 { #category : #media }
-VLCLibrary >> mediaFileForInstance: aVLCInstance fromFileDescriptor: fileDescriptor [
-	^ self ffiCall: 'void* libvlc_media_new_fd(void* aVLCInstance, int fileDescriptor);'
+VLCLibrary >> media: aMedia addOption: theOption [
+	"full example:
+
+colArguments := OrderedCollection new.
+colArguments add: '--no-video'.
+vlc := VLCLibrary uniqueInstance createVLCWithArguments: colArguments.
+
+mediaList := VLCLibrary uniqueInstance createMediaListFromInstance: vlc.
+media := VLCLibrary uniqueInstance mediaFileForInstance: vlc fromStringPath: '/home/badetitou/myVideo.mkv'.
+VLCLibrary uniqueInstance addMedia: media inMediaList: mediaList.
+
+VLCLibrary uniqueInstance addOption: ':sout=#transcode{vcodec=h264,vb=150,acodec=mp4a,ab=50,mono,channels=1}:standard{mux=ts,dst=:8484/vlc_stream.mp4,access=http}' toMedia: media.
+
+mediaListPlayer := VLCLibrary uniqueInstance createListPlayerForInstance: vlc.
+VLCLibrary uniqueInstance setMediaList: mediaList forListPlayer: mediaListPlayer.
+VLCLibrary uniqueInstance playListPlayer: mediaListPlayer."
+	^ self ffiCall: 'void* libvlc_media_add_option(VLCMedia * aMedia, String theOption)'
 ]
 
 { #category : #media }
-VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringLocation: aLocation [
-	^ self ffiCall: 'void* libvlc_media_new_location (void * aVLCInstance, String aLocation);'
+VLCLibrary >> media: aMedia addOption: theOption flag: aFlag [
+	"Add an option to the media with configurable flags.
+
+This option will be used to determine how the media_player will read the media. This allows to use VLC's advanced reading/streaming options on a per-media basis.
+
+The options are detailed in vlc –long-help, for instance ""--sout-all"". Note that all options are not usable on medias: specifically, due to architectural issues, video-related options such as text renderer options cannot be set on a single media. They must be set on the whole libvlc instance instead."
+	^ self ffiCall: 'void libvlc_media_add_option_flag(VLCMedia * aMedia, String theOption, int aFlag)'
 ]
 
 { #category : #media }
-VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringPath: aStringPath [
-	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
-	^ self ffiCall: 'void* libvlc_media_new_path(void* aVLCInstance, String aStringPath);'
+VLCLibrary >> media: aVLCMedia getMeta: aVLCMeta [ 
+	"Read the meta of the media."
+	^ self ffiCall: 'String libvlc_media_get_meta(VLCMedia * aVLCMedia, VLCMetaT aVLCMeta)'
+]
+
+{ #category : #media }
+VLCLibrary >> media: aVLCMedia getStats: aVLCMediaStats [ 
+	"Get the current statistics about the media."
+	^ self ffiCall: 'bool libvlc_media_get_stats(VLCMedia * aVLCMedia, VLCMediaStats * aVLCMediaStats)'
+]
+
+{ #category : #media }
+VLCLibrary >> media: aVLCMedia parseWithOptions: aVLCMediaParseFlag timeout: timeout [ 
+	"Parse the media asynchronously with options."
+	^ self ffiCall: 'int libvlc_media_parse_with_options (VLCMedia * aVLCMedia, VLCMediaParseFlag aVLCMediaParseFlag, int timeout)'
+]
+
+{ #category : #media }
+VLCLibrary >> media: aVLCMedia setMeta: aVLCMeta with: newMetaValue [
+	"Read the meta of the media."
+	^ self ffiCall: 'void libvlc_media_set_meta(VLCMedia * aVLCMedia, VLCMetaT aVLCMeta, String newMetaValue)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaDuplicate: aVLCMedia [
+	"Get the media resource locator (mrl) from a media descriptor object."
+	^ self ffiCall: 'VLCMedia libvlc_media_duplicate(VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaEventManager: aVLCMedia [
+	"Get event manager from media descriptor object."
+	^ self ffiCall: 'VLCEventManager libvlc_media_event_manager (VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaGetDuration: aVLCMedia [
+	"Get duration (in ms) of media descriptor object item."
+	^ self ffiCall: 'int libvlc_media_get_duration (VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaGetMRL: aVLCMedia [
+	"Get the media resource locator (mrl) from a media descriptor object."
+	^ self ffiCall: 'String libvlc_media_get_mrl(VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaGetParsedStatus: aVLCMedia [
+	"Stop the parsing of the media."
+	^ self ffiCall: 'VLCMediaParsedStatus libvlc_media_get_parsed_status (VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaGetState: aVLCMedia [ 
+	"Save the meta previously set."
+	^ self ffiCall: 'VLCState libvlc_media_get_state(VLCMedia * aVLCMedia)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaList: aVLCMediaList addMedia: aVLCMedia [
+	^ self ffiCall: 'int libvlc_media_list_add_media(VLCMediaList * aVLCMediaList, VLCMedia * aVLCMedia)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaList: aVLCMediaList indexOfItem: aVLCMedia [
+	"Find index position of List media instance in media list."
+	^ self ffiCall: 'int libvlc_media_list_index_of_item (VLCMediaList * aVLCMediaList, VLCMedia aVLCMedia)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaList: aVLCMediaList insertMedia: aVLCMedia at: anIndex [
+"insert media instance in media list on a position The libvlc_media_list_lock should be held upon entering this function."
+	^ self ffiCall: 'int libvlc_media_list_insert_media (VLCMediaList * aVLCMediaList, VLCMedia * aVLCMedia, int anIndex)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaList: aVLCMediaList itemAtIndex: position [
+	"List media instance in media list at a position The libvlc_media_list_lock should be held upon entering this function."
+	^ self ffiCall: 'VLCMedia * libvlc_media_list_item_at_index (VLCMediaList * aVLCMediaList, int position)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaList:aVLCMediaList removeIndex: position [
+	"Get media instance from this media list instance."
+	^ self ffiCall: 'int libvlc_media_list_remove_index (VLCMediaList * aVLCMediaList, int position)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaList: aVLCMediaList setMedia: aVLCMedia [
+	"Associate media instance with this media list instance."
+	^ self ffiCall: 'void libvlc_media_list_set_media (VLCMediaList * aVLCMediaList, VLCMedia * aLCMedia)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaListCount: aVLCMediaList [
+	"Get count on media list items The libvlc_media_list_lock should be held upon entering this function."
+	^ self ffiCall: 'int libvlc_media_list_count (VLCMediaList * aVLCMediaList)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaListEventManager: aVLCMediaList [
+	"Release lock on media list items The libvlc_media_list_lock should be held upon entering this function."
+	^ self ffiCall: 'VLCEventManager * libvlc_media_list_event_manager (VLCMediaList * aVLCMediaList)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaListIsReadonly: aVLCMediaList [
+	"This indicates if this media list is read-only from a user point of view."
+	^ self ffiCall: 'bool libvlc_media_list_is_readonly (VLCMediaList * aVLCMediaList)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaListLock: aVLCMediaList [
+	"Get lock on media list items."
+	^ self ffiCall: 'void libvlc_media_list_lock (VLCMediaList * aVLCMediaList)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaListMedia: aVLCMediaList [
+	"Get media instance from this media list instance."
+	^ self ffiCall: 'VLCMedia libvlc_media_list_media (VLCMediaList * aVLCMediaList)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaListNew: aVLCInstance [
+	"Create an empty media list."
+	^ self ffiCall: 'VLCMediaList * libvlc_media_list_new(VLCInstance * aVLCInstance)'
 ]
 
 { #category : #'media list player' }
@@ -360,6 +462,68 @@ VLCLibrary >> mediaListPlayerStopAsync: aMediaListPlayer [
 	^ self ffiCall: 'void libvlc_media_list_player_stop_async (VLCMediaListPlayer * aMediaListPlayer)'
 ]
 
+{ #category : #'media list' }
+VLCLibrary >> mediaListRelease: aVLCMediaList [
+	^ self ffiCall: 'void libvlc_media_list_release (VLCMediaList * aVLCMediaList)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaListRetain: aVLCMediaList [
+	^ self ffiCall: 'void libvlc_media_list_retain (VLCMediaList * aVLCMediaList)'
+]
+
+{ #category : #'media list' }
+VLCLibrary >> mediaListUnlock: aVLCMediaList [
+	"Release lock on media list items The libvlc_media_list_lock should be held upon entering this function."
+	^ self ffiCall: 'void libvlc_media_list_unlock (VLCMediaList * aVLCMediaList)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaNew: aVLCInstance fd: fileDescriptor [
+	^ self ffiCall: 'VLCMedia * libvlc_media_new_fd(VLCInstance * aVLCInstance, int fileDescriptor)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaNew: aVLCInstance location: aLocation [
+	^ self ffiCall: 'VLCMedia * libvlc_media_new_location (VLCInstance * aVLCInstance, String aLocation)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaNew: aVLCInstance path: aStringPath [
+	"ex self mediaNew: vlc path: '/home/badetitou/Musique/Coda.mp3'"
+	^ self ffiCall: 'VLCMedia * libvlc_media_new_path(VLCInstance * aVLCInstance, String aStringPath)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaParseStop: aVLCMedia [
+	"Stop the parsing of the media."
+	^ self ffiCall: 'void libvlc_media_parse_stop (VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaRelease: aVLCMedia [
+	"Decrement the reference count of a media descriptor object."
+	^ self ffiCall: 'void libvlc_media_release(VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaRetain: aVLCMedia [
+	"Retain a reference to a media descriptor object (libvlc_media_t)."
+	^ self ffiCall: 'void libvlc_media_retain(VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaSaveMeta: aVLCMedia [ 
+	"Save the meta previously set."
+	^ self ffiCall: 'int libvlc_media_save_meta(VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaSubitems: aVLCMedia [
+	"Get subitems of media descriptor object."
+	^ self ffiCall: 'VLCMediaList libvlc_media_subitems (VLCMedia * aVLCMedia)'
+]
+
 { #category : #'media player' }
 VLCLibrary >> pauseMediaPlayer: aMediaPlayer [
 	"
@@ -400,12 +564,6 @@ VLCLibrary >> positionMediaPlayer: aMediaPlayer setAt: thePositionAsFloatBetween
 { #category : #core }
 VLCLibrary >> release: aLIBVLCInstance [
 	^ self ffiCall: 'void libvlc_release (VLCInstance * aLIBVLCInstance)'
-]
-
-{ #category : #media }
-VLCLibrary >> releaseMedia: aMedia [
-	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
-	^ self ffiCall: 'void* libvlc_media_release(void* aMedia);'
 ]
 
 { #category : #'media player' }
@@ -453,11 +611,6 @@ VLCLibrary >> unix64LibraryName [
 			libraryPath := path asFileReference / 'libvlc.so'.
 			libraryPath exists ifTrue: [ ^ libraryPath fullName ] ].
 	self error: 'Cannot locate vlc library. Please check if it installed on your system'
-]
-
-{ #category : #'private - media' }
-VLCLibrary >> vlcAddOption: theOption toMedia: aMedia [
-	^ self ffiCall: 'void* libvlc_media_add_option(void* aMedia, void * theOption);'
 ]
 
 { #category : #'accessing platform' }

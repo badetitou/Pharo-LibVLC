@@ -105,7 +105,7 @@ VLCLibrary >> countMediaIn: aMediaList [
 
 { #category : #'media list player' }
 VLCLibrary >> createListPlayerForInstance: anInstance [
-	^ self ffiCall: 'void* libvlc_media_list_player_new(void* anInstance)'
+	^ self ffiCall: 'VLCMediaListPlayer * libvlc_media_list_player_new(VLCInstance * anInstance)'
 ]
 
 { #category : #'media list' }
@@ -262,6 +262,16 @@ VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringLocation: aLocation [
 VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringPath: aStringPath [
 	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
 	^ self ffiCall: 'void* libvlc_media_new_path(void* aVLCInstance, String aStringPath);'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerRelease: aVLCMediaListPlayer [
+	^ self ffiCall: 'void libvlc_media_list_player_release (VLCMediaListPlayer * aVLCMediaListPlayer)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerRetain: aVLCMediaListPlayer [
+	^ self ffiCall: 'void libvlc_media_list_player_retain (VLCMediaListPlayer * aVLCMediaListPlayer)'
 ]
 
 { #category : #'media list player' }

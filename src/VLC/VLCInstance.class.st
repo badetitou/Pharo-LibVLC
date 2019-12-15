@@ -4,7 +4,7 @@ Class {
 	#category : #'VLC-Structure'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #creation }
 VLCInstance >> createMediaListPlayer [
 	^ VLCLibrary uniqueInstance createListPlayerForInstance: self
 ]

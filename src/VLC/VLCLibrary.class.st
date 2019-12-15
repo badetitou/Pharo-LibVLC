@@ -265,6 +265,11 @@ VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringPath: aStringPath [
 ]
 
 { #category : #'media list player' }
+VLCLibrary >> mediaListPlayerEventManager: aVLCMediaListPlayer [
+	^ self ffiCall: 'libvlc_media_list_player_event_manager (VLCMediaListPlayer * aVLCMediaListPlayer)'
+]
+
+{ #category : #'media list player' }
 VLCLibrary >> mediaListPlayerRelease: aVLCMediaListPlayer [
 	^ self ffiCall: 'void libvlc_media_list_player_release (VLCMediaListPlayer * aVLCMediaListPlayer)'
 ]

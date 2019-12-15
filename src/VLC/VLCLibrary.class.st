@@ -2,6 +2,19 @@
 When you use me: 
 
 1. create an instance of me with #createVLCInstance or #createVLCWithArguments:
+
+
+example without sugar:
+
+VLCLibrary uniqueInstance getVersion.
+vlc := VLCLibrary uniqueInstance createVLCInstance.
+media := VLCLibrary uniqueInstance mediaNew: vlc path: '/home/badetitou/Musique/Coda.mp3'.
+mediaList := VLCLibrary uniqueInstance mediaListNew: vlc.
+mediaListPlayer := VLCLibrary uniqueInstance mediaListPlayerNew: vlc.
+VLCLibrary uniqueInstance mediaListPlayer: mediaListPlayer setMediaList: mediaList.
+VLCLibrary uniqueInstance mediaList: mediaList addMedia: media.
+VLCLibrary uniqueInstance mediaListPlayerPlay: mediaListPlayer.
+VLCLibrary uniqueInstance mediaListPlayerPause: mediaListPlayer.
 "
 Class {
 	#name : #VLCLibrary,

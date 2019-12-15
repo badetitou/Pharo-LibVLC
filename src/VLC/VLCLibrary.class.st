@@ -28,12 +28,7 @@ VLCLibrary class >> startUp: isImageStarting [
 	isImageStarting ifTrue: [ self reset ]
 ]
 
-{ #category : #initialization }
-VLCLibrary >> addIntf: aLIBVLCInstance [
-	^ self ffiCall: 'void libvlc_release (VLCInstance * aLIBVLCInstance)'
-]
-
-{ #category : #initialization }
+{ #category : #core }
 VLCLibrary >> addIntfTo: aLIBVLCInstance named: name [
 	^ self ffiCall: 'void libvlc_release (VLCInstance * aLIBVLCInstance, String name)'
 ]
@@ -178,13 +173,18 @@ VLCLibrary >> detachToEventManager: anEventManager forEvent: aTypeOfEvent withCa
 )	'
 ]
 
-{ #category : #meta }
+{ #category : #core }
+VLCLibrary >> free: somePointer [
+	^ self ffiCall: 'voic libvlc_free (void * somePointer)'
+]
+
+{ #category : #core }
 VLCLibrary >> getChangeset [
 
 	^ self ffiCall: 'String libvlc_get_changeset()'
 ]
 
-{ #category : #meta }
+{ #category : #core }
 VLCLibrary >> getCompiler [
 
 	^ self ffiCall: 'String libvlc_get_compiler()'
@@ -195,7 +195,7 @@ VLCLibrary >> getMediaInsideMediaPlayer: aMediaPlayer [
 	^ self ffiCall: 'void * libvlc_media_player_get_media(void* aMediaPlayer);'
 ]
 
-{ #category : #meta }
+{ #category : #core }
 VLCLibrary >> getVersion [
 
 	^ self ffiCall: 'String libvlc_get_version()'
@@ -397,7 +397,7 @@ VLCLibrary >> positionMediaPlayer: aMediaPlayer setAt: thePositionAsFloatBetween
 	^ self ffiCall: 'float libvlc_media_player_set_position(void* aMediaPlayer, float thePositionAsFloatBetweenOAnd1, true);'
 ]
 
-{ #category : #initialization }
+{ #category : #core }
 VLCLibrary >> release: aLIBVLCInstance [
 	^ self ffiCall: 'void libvlc_release (VLCInstance * aLIBVLCInstance)'
 ]
@@ -413,9 +413,21 @@ VLCLibrary >> resetMediaPlayer: aMediaPlayer [
 	self positionMediaPlayer: aMediaPlayer setAt: 0.0 
 ]
 
-{ #category : #initialization }
+{ #category : #core }
 VLCLibrary >> retain: aLIBVLCInstance [
 	^ self ffiCall: 'voic libvlc_retain (VLCInstance * aLIBVLCInstance)'
+]
+
+{ #category : #core }
+VLCLibrary >> setAppIdInstance: aVLCInstance id: id version: version icon: icon [ 
+	"Sets some meta-information about the application."
+	^ self ffiCall: 'void libvlc_set_app_id (lVLCInstance * aVLCInstance, String id, String version, String icon)'
+]
+
+{ #category : #core }
+VLCLibrary >> setUserAgent: aVLCInstance name: id http: version [
+	"Sets the application name."
+	^ self ffiCall: 'void libvlc_set_user_agent (VLCInstance_t * aVLCInstance, const char *name, const char *http)'
 ]
 
 { #category : #'media player' }

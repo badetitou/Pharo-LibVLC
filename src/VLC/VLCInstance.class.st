@@ -6,5 +6,5 @@ Class {
 
 { #category : #creation }
 VLCInstance >> createMediaListPlayer [
-	^ VLCLibrary uniqueInstance createListPlayerForInstance: self
+	^ VLCLibrary uniqueInstance mediaListPlayerNew: self
 ]

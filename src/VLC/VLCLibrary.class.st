@@ -103,11 +103,6 @@ VLCLibrary >> countMediaIn: aMediaList [
 	^ self ffiCall: 'int libvlc_media_list_count (void * aMediaList)'
 ]
 
-{ #category : #'media list player' }
-VLCLibrary >> createListPlayerForInstance: anInstance [
-	^ self ffiCall: 'VLCMediaListPlayer * libvlc_media_list_player_new(VLCInstance * anInstance)'
-]
-
 { #category : #'media list' }
 VLCLibrary >> createMediaListFromInstance: aVLCInstance [
 	^ self ffiCall: 'void* libvlc_media_list_new(void* aVLCInstance)'
@@ -183,11 +178,6 @@ VLCLibrary >> detachToEventManager: anEventManager forEvent: aTypeOfEvent withCa
 )	'
 ]
 
-{ #category : #'media list player' }
-VLCLibrary >> eventManagerListPlayer: aListPlayer [
-	^ self ffiCall: 'void* libvlc_media_list_player_event_manager (void* aListPlayer)'
-]
-
 { #category : #meta }
 VLCLibrary >> getChangeset [
 
@@ -198,11 +188,6 @@ VLCLibrary >> getChangeset [
 VLCLibrary >> getCompiler [
 
 	^ self ffiCall: 'String libvlc_get_compiler()'
-]
-
-{ #category : #'media list player' }
-VLCLibrary >> getCurrentMediaPlayerOfListPlayer: aListPlayer [
-	^ self ffiCall: 'void * libvlc_media_list_player_get_media_player (void * aListPlayer)'
 ]
 
 { #category : #'media player' }
@@ -229,11 +214,6 @@ VLCLibrary >> initializeVLCWithArguments: aCollectionOfString andNumberOfArgs: s
 { #category : #'media list' }
 VLCLibrary >> insertInMediaList: aMediaList media: aMedia atIndex: anIndex [
 	^ self ffiCall: 'int libvlc_media_list_insert_media (void * aMediaList, void * aMedia, int anIndex)'
-]
-
-{ #category : #'media list player' }
-VLCLibrary >> isListPlayerPlaying: aListPlayer [
-	^ self ffiCall: 'bool libvlc_media_list_player_is_playing (void* aListPlayer)'
 ]
 
 { #category : #'media player' }
@@ -265,28 +245,119 @@ VLCLibrary >> mediaFileForInstance: aVLCInstance fromStringPath: aStringPath [
 ]
 
 { #category : #'media list player' }
+VLCLibrary >> mediaListPlayer: aVLCMediaListPlayer playItem: aVLCMedia [
+	"Play the given media item."
+	^ self ffiCall: 'int libvlc_media_list_player_play_item (VLCMediaListPlayer * aVLCMediaListPlayer, VLCMedia * aVLCMedia)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayer: aVLCMediaListPlayer playItemAtIndex: anIndex [
+	"Play media list item at position anIndex.
+	
+# return 
+	0 upon success -1 if the item wasn't found
+"
+	^ self ffiCall: 'int libvlc_media_list_player_play_item_at_index (VLCMediaListPlayer * aVLCMediaListPlayer, int anIndex)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayer: aMediaListPlayer setMediaList: aMediaList [
+	"Replace media player in media_list_player with this instance."
+	^ self ffiCall: 'void libvlc_media_list_player_set_media_list (VLCMediaListPlayer * aMediaListPlayer, VLCMediaList * aMediaList)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayer: aVLCMediaListPlayer setMediaPlayer: aVLCMediaPlayer [
+	"Replace media player in media_list_player with this instance."
+	^ self ffiCall: 'void libvlc_media_list_player_set_media_player (VLCMediaListPlayer * aVLCMediaListPlayer, aVLCMediaPlayer * VLCMediaPlayer)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayer: aMediaListPlayer setPause: doPause [
+	"Pause or resume media list.
+	
+	play ~= 0
+	pause = 0"
+	^ self ffiCall: 'void libvlc_media_list_player_set_pause (VLCMediaListPlayer * aMediaListPlayer, int doPause)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayer: aMediaListPlayer setPlaybackMode: aVLCPlaybackMode [
+	"Sets the playback mode for the playlist."
+
+	^ self ffiCall: 'void libvlc_media_list_player_set_playback_mode (VLCMediaListPlayer * aMediaListPlayer, VLCPlaybackMode aVLCPlaybackMode)'
+]
+
+{ #category : #'media list player' }
 VLCLibrary >> mediaListPlayerEventManager: aVLCMediaListPlayer [
-	^ self ffiCall: 'libvlc_media_list_player_event_manager (VLCMediaListPlayer * aVLCMediaListPlayer)'
+	"Return the event manager of this media_list_player."
+	^ self ffiCall: 'VLCEventManager * libvlc_media_list_player_event_manager (VLCMediaListPlayer * aVLCMediaListPlayer)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerGetMediaPlayer: aMediaListPlayer [
+	"Get media player of the media_list_player instance."
+	^ self ffiCall: 'VLCMediaPlayer * libvlc_media_list_player_get_media_player (VLCMediaListPlayer * aMediaListPlayer)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerGetState: aMediaListPlayer [
+	"Get current libvlc_state of media list player."
+	^ self ffiCall: 'VLCState libvlc_media_list_player_get_state (VLCMediaListPlayer * aVLCMediaListPlayer)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerIsPlaying: aVLCMediaListPlayer [
+	"Is media list playing?"
+	^ self ffiCall: 'bool libvlc_media_list_player_is_playing (VLCMediaListPlayer * aVLCMediaListPlayer)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerNew: anInstance [
+	"Create new media_list_player."
+	^ self ffiCall: 'VLCMediaListPlayer * libvlc_media_list_player_new(VLCInstance * anInstance)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerNext: aMediaListPlayer [
+	"Play next item from media list."
+	^ self ffiCall: 'int libvlc_media_list_player_next (VLCMediaListPlayer * aMediaListPlayer)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerPause: aMediaListPlayer [
+	"Toggle pause (or resume) media list."
+	^ self ffiCall: 'void libvlc_media_list_player_pause (VLCMediaListPlayer * aMediaListPlayer)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerPlay: aMediaListPlayer [
+	"Play media list."
+	^ self ffiCall: 'void libvlc_media_list_player_play (VLCMediaListPlayer * aMediaListPlayer)'
+]
+
+{ #category : #'media list player' }
+VLCLibrary >> mediaListPlayerPrevious: aMediaListPlayer [
+	"Play previous item from media list."
+	^ self ffiCall: 'int libvlc_media_list_player_previous (VLCMediaListPlayer * aMediaListPlayer)'
 ]
 
 { #category : #'media list player' }
 VLCLibrary >> mediaListPlayerRelease: aVLCMediaListPlayer [
+	"Release a media_list_player after use Decrement the reference count of a media player object."
 	^ self ffiCall: 'void libvlc_media_list_player_release (VLCMediaListPlayer * aVLCMediaListPlayer)'
 ]
 
 { #category : #'media list player' }
 VLCLibrary >> mediaListPlayerRetain: aVLCMediaListPlayer [
+	"Retain a reference to a media player list object."
 	^ self ffiCall: 'void libvlc_media_list_player_retain (VLCMediaListPlayer * aVLCMediaListPlayer)'
 ]
 
 { #category : #'media list player' }
-VLCLibrary >> nextListPlayer: aListPlayer [
-	^ self ffiCall: 'void* libvlc_media_list_player_next (void* aListPlayer)'
-]
-
-{ #category : #'media list player' }
-VLCLibrary >> pauseListPlayer: aListPlayer [
-	^ self ffiCall: 'void* libvlc_media_list_player_pause (void* aListPlayer)'
+VLCLibrary >> mediaListPlayerStopAsync: aMediaListPlayer [
+	"Stop playing media list."
+	^ self ffiCall: 'void libvlc_media_list_player_stop_async (VLCMediaListPlayer * aMediaListPlayer)'
 ]
 
 { #category : #'media player' }
@@ -299,21 +370,6 @@ VLCLibrary >> pauseMediaPlayer: aMediaPlayer [
 	vlc pauseMediaPlayer: player
 	"
 	^ self ffiCall: 'void * libvlc_media_player_pause(void* aMediaPlayer);'
-]
-
-{ #category : #'media list player' }
-VLCLibrary >> playAt: indexMedia listPlayer: aListPlayer [
-	^ self ffiCall: 'void* libvlc_media_list_player_play_item_at_index (void* aListPlayer, int indexMedia)'
-]
-
-{ #category : #'media list player' }
-VLCLibrary >> playItem: aMedia listPlayer: aListPlayer [
-	^ self ffiCall: 'void* libvlc_media_list_player_play_item (void* aListPlayer, void* aMedia)'
-]
-
-{ #category : #'media list player' }
-VLCLibrary >> playListPlayer: aListPlayer [
-	^ self ffiCall: 'void* libvlc_media_list_player_play (void* aListPlayer)'
 ]
 
 { #category : #'media player' }
@@ -341,11 +397,6 @@ VLCLibrary >> positionMediaPlayer: aMediaPlayer setAt: thePositionAsFloatBetween
 	^ self ffiCall: 'float libvlc_media_player_set_position(void* aMediaPlayer, float thePositionAsFloatBetweenOAnd1, true);'
 ]
 
-{ #category : #'media list player' }
-VLCLibrary >> previousListPlayer: aListPlayer [
-	^ self ffiCall: 'void* libvlc_media_list_player_previous (void* aListPlayer)'
-]
-
 { #category : #initialization }
 VLCLibrary >> release: aLIBVLCInstance [
 	^ self ffiCall: 'void libvlc_release (VLCInstance * aLIBVLCInstance)'
@@ -367,19 +418,9 @@ VLCLibrary >> retain: aLIBVLCInstance [
 	^ self ffiCall: 'voic libvlc_retain (VLCInstance * aLIBVLCInstance)'
 ]
 
-{ #category : #'media list player' }
-VLCLibrary >> setMediaList: aMediaList forListPlayer: aListPlayer [
-	^ self ffiCall: 'void* libvlc_media_list_player_set_media_list (void* aListPlayer, void* aMediaList)'
-]
-
 { #category : #'media player' }
 VLCLibrary >> setXWindows: indentifier forMediaPlayer: aMediaPlayer [
 	^ self ffiCall: 'void libvlc_media_player_set_xwindow(void* aMediaPlayer, int indentifier);'
-]
-
-{ #category : #'media list player' }
-VLCLibrary >> stopListPlayer: aListPlayer [
-	^ self ffiCall: 'void * libvlc_media_list_player_stop (void* aListPlayer)'
 ]
 
 { #category : #'accessing platform' }

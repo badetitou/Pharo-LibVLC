@@ -6,7 +6,7 @@ Class {
 		'OFFSET_TYPE',
 		'OFFSET_U'
 	],
-	#category : #'VLC-Structure'
+	#category : #'VLC-Events'
 }
 
 { #category : #'field definition' }

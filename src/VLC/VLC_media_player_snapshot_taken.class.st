@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'OFFSET_PSZ_FILENAME'
 	],
-	#category : #'VLC-Structure'
+	#category : #'VLC-Events'
 }
 
 { #category : #'field definition' }

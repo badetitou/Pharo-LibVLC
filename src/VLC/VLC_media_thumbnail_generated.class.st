@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'OFFSET_P_THUMBNAIL'
 	],
-	#category : #'VLC-Structure'
+	#category : #'VLC-Events'
 }
 
 { #category : #'field definition' }

@@ -28,6 +28,16 @@ VLCLibrary class >> startUp: isImageStarting [
 	isImageStarting ifTrue: [ self reset ]
 ]
 
+{ #category : #initialization }
+VLCLibrary >> addIntf: aLIBVLCInstance [
+	^ self ffiCall: 'void libvlc_release (VLCInstance * aLIBVLCInstance)'
+]
+
+{ #category : #initialization }
+VLCLibrary >> addIntfTo: aLIBVLCInstance named: name [
+	^ self ffiCall: 'void libvlc_release (VLCInstance * aLIBVLCInstance, String name)'
+]
+
 { #category : #'media list' }
 VLCLibrary >> addMedia: aMedia inMediaList: aMediaList [
 	^ self ffiCall: 'bool libvlc_media_list_add_media(void* aMediaList, void* aMedia)'
@@ -77,6 +87,17 @@ VLCLibrary >> attachToEventManager: anEventManager forEvent: aTypeOfEvent withCa
 )	'
 ]
 
+{ #category : #time }
+VLCLibrary >> clock [
+"Return the current time as defined by LibVLC.
+
+The unit is the microsecond. Time increases monotonically (regardless of time zone changes and RTC adjustements). The origin is arbitrary but consistent across the whole system (e.g. the system uptim, the time since the system was booted).
+
+Note
+On systems that support it, the POSIX monotonic clock is used."
+	^ self ffiCall: 'int64 libvlc_clock(void)	'
+]
+
 { #category : #'media list' }
 VLCLibrary >> countMediaIn: aMediaList [
 	^ self ffiCall: 'int libvlc_media_list_count (void * aMediaList)'
@@ -107,7 +128,7 @@ VLCLibrary >> createPlayerForMedia: aVLCMedia [
 
 { #category : #initialization }
 VLCLibrary >> createVLCInstance [
-	^ self ffiCall: 'void * libvlc_new()'
+	^ self ffiCall: 'VLCInstance * libvlc_new()'
 ]
 
 { #category : #initialization }
@@ -125,6 +146,20 @@ VLCLibrary >> createVLCWithArguments: aCollectionOfString [
 	externalArray := (FFIExternalArray externalNewType: 'void*' size: aCollectionOfString size) autoRelease.
 	aCollectionOfString withIndexDo: [ :string :index | externalArray at: index put: (ExternalAddress fromString: string) autoRelease ].
 	^ self initializeVLCWithArguments: externalArray getHandle andNumberOfArgs: aCollectionOfString size.
+]
+
+{ #category : #time }
+VLCLibrary >> delay: aTime [
+"Return the delay (in microseconds) until a certain timestamp.
+
+# Parameters
+	*aTime* timestamp
+
+# 	Returns
+	negative if timestamp is in the past, positive if it is in the future
+"
+	self flag: 'may fail because problem with "static"'.
+	^ self ffiCall: 'int64 libvlc_delay(int64 aTime)'
 ]
 
 { #category : #'event manager' }
@@ -151,6 +186,18 @@ VLCLibrary >> detachToEventManager: anEventManager forEvent: aTypeOfEvent withCa
 { #category : #'media list player' }
 VLCLibrary >> eventManagerListPlayer: aListPlayer [
 	^ self ffiCall: 'void* libvlc_media_list_player_event_manager (void* aListPlayer)'
+]
+
+{ #category : #meta }
+VLCLibrary >> getChangeset [
+
+	^ self ffiCall: 'String libvlc_get_changeset()'
+]
+
+{ #category : #meta }
+VLCLibrary >> getCompiler [
+
+	^ self ffiCall: 'String libvlc_get_compiler()'
 ]
 
 { #category : #'media list player' }
@@ -284,6 +331,11 @@ VLCLibrary >> previousListPlayer: aListPlayer [
 	^ self ffiCall: 'void* libvlc_media_list_player_previous (void* aListPlayer)'
 ]
 
+{ #category : #initialization }
+VLCLibrary >> release: aLIBVLCInstance [
+	^ self ffiCall: 'void libvlc_release (VLCInstance * aLIBVLCInstance)'
+]
+
 { #category : #media }
 VLCLibrary >> releaseMedia: aMedia [
 	"ex self mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'"
@@ -293,6 +345,11 @@ VLCLibrary >> releaseMedia: aMedia [
 { #category : #'media player' }
 VLCLibrary >> resetMediaPlayer: aMediaPlayer [
 	self positionMediaPlayer: aMediaPlayer setAt: 0.0 
+]
+
+{ #category : #initialization }
+VLCLibrary >> retain: aLIBVLCInstance [
+	^ self ffiCall: 'voic libvlc_retain (VLCInstance * aLIBVLCInstance)'
 ]
 
 { #category : #'media list player' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #VLCU,
 	#superclass : #FFIExternalUnion,
-	#category : #'VLC-Structure'
+	#category : #'VLC-Events'
 }
 
 { #category : #'field definition' }

@@ -5,7 +5,7 @@ Class {
 		'OFFSET_I_ID',
 		'OFFSET_I_TYPE'
 	],
-	#category : #'VLC-Structure'
+	#category : #'VLC-Events'
 }
 
 { #category : #'field definition' }

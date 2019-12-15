@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'OFFSET_META_TYPE'
 	],
-	#category : #'VLC-Structure'
+	#category : #'VLC-Events'
 }
 
 { #category : #'field definition' }

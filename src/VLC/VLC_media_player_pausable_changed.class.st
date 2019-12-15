@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'OFFSET_NEW_PAUSABLE'
 	],
-	#category : #'VLC-Structure'
+	#category : #'VLC-Events'
 }
 
 { #category : #'field definition' }

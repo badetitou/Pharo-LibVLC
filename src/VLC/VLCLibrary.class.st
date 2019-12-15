@@ -239,6 +239,56 @@ VLCLibrary >> media: aVLCMedia setMeta: aVLCMeta with: newMetaValue [
 	^ self ffiCall: 'void libvlc_media_set_meta(VLCMedia * aVLCMedia, VLCMetaT aVLCMeta, String newMetaValue)'
 ]
 
+{ #category : #'media discovery' }
+VLCLibrary >> mediaDiscovererIsRunning: aVLCMediaDiscoverer [
+	"Query if media service discover object is running."
+	^ self ffiCall: 'bool libvlc_media_discoverer_is_running (VLCMediaDiscoverer * aVLCMediaDiscoverer)'
+]
+
+{ #category : #'media discovery' }
+VLCLibrary >> mediaDiscovererMediaList: aVLCMediaDiscoverer [
+	"Get media service discover media list."
+	^ self ffiCall: 'VLCMediaList * libvlc_media_discoverer_media_list (VLCMediaDiscoverer * aVLCMediaDiscoverer)'
+]
+
+{ #category : #'media discovery' }
+VLCLibrary >> mediaDiscovererNew: aVLCInstance withName: aName [
+	^ self ffiCall: 'VLCMediaDiscoverer libvlc_media_discoverer_new (VLCInstance * aVLCInstance, String aName)'
+]
+
+{ #category : #'media discovery' }
+VLCLibrary >> mediaDiscovererRelease: aVLCMediaDiscoverer [
+	"Release media discover object."
+	^ self ffiCall: 'void libvlc_media_discoverer_release (VLCMediaDiscoverer * aVLCMediaDiscoverer)'
+]
+
+{ #category : #'media discovery' }
+VLCLibrary >> mediaDiscovererStart: aVLCMediaDiscoverer [
+	"Start media discovery."
+	^ self ffiCall: 'int libvlc_media_discoverer_start (VLCMediaDiscoverer * aVLCMediaDiscoverer)'
+]
+
+{ #category : #'media discovery' }
+VLCLibrary >> mediaDiscovererStop: aVLCMediaDiscoverer [
+	"Stop media discovery."
+	^ self ffiCall: 'void libvlc_media_discoverer_stop (VLCMediaDiscoverer * aVLCMediaDiscoverer)'
+]
+
+{ #category : #'media discovery' }
+VLCLibrary >> mediaDiscovererlistGet: aVLCInstance category: aVLCMediaDiscovererCategory inDescriptions: aVLCMediaDiscovererDescription [
+	"Get media discoverer services by category."
+
+	^ self ffiCall:
+		  'int libvlc_media_discoverer_list_get (VLInstance * aVLCInstance, VLCMediaDiscovererCategory aVLCMediaDiscovererCategory, VLCMediaDiscovererDescription *** aVLCMediaDiscovererDescription)'
+]
+
+{ #category : #'media discovery' }
+VLCLibrary >> mediaDiscovererlistRelease: aVLCMediaDiscovererDescription count: aCount [
+	"Get media discoverer services by category."
+
+	^ self ffiCall: 'void libvlc_media_discoverer_list_release (VLCMediaDiscovererDescription ** aVLCMediaDiscovererDescription, int count)'
+]
+
 { #category : #media }
 VLCLibrary >> mediaDuplicate: aVLCMedia [
 	"Get the media resource locator (mrl) from a media descriptor object."

@@ -26,5 +26,6 @@ BaselineOfVLC >> defineGroups: spec [
 { #category : #baselines }
 BaselineOfVLC >> definePackages: spec [
 	spec
-		package: 'VLC'
+		package: 'VLC';
+		package: 'VLC-Tests' with: [ spec requires: #('VLC') ]
 ]

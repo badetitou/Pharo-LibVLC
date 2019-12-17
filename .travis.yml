@@ -6,6 +6,9 @@ notifications:
         on_success: never
         on_failure: always
 
+before_install:
+  - sudo apt-get -y install vlc
+
 os:
 - linux
 

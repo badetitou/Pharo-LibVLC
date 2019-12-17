@@ -8,6 +8,9 @@ notifications:
 
 before_install:
   - sudo apt-get -y install vlc
+addons:
+  apt:
+    update: true
 
 os:
 - linux

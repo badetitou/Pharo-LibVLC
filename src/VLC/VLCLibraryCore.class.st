@@ -7,16 +7,45 @@ Class {
 	#category : #'VLC-Library'
 }
 
-{ #category : #'accessing platform' }
-VLCLibraryCore >> getVersion [
+{ #category : #'system startup' }
+VLCLibraryCore class >> initialize [
+	"reset me when startup"
+	Smalltalk addToStartUpList: self.
+]
 
-	^ self ffiCall: 'String libvlc_get_version()'
+{ #category : #'system startup' }
+VLCLibraryCore class >> reset [ 
+	uniqueInstance := nil
+]
+
+{ #category : #'system startup' }
+VLCLibraryCore class >> startUp: isImageStarting [
+
+	isImageStarting ifTrue: [ self reset ]
+]
+
+{ #category : #meta }
+VLCLibraryCore >> getCompileBy [
+
+	^ self ffiCall: #(String VLC_CompileBy())
+]
+
+{ #category : #meta }
+VLCLibraryCore >> getCompileHost [
+
+	^ self ffiCall: #(String VLC_CompileHost())
+]
+
+{ #category : #meta }
+VLCLibraryCore >> getCompiler [
+
+	^ self ffiCall: #(String VLC_Compiler())
 ]
 
 { #category : #'accessing platform' }
 VLCLibraryCore >> initialize [
 	super initialize.
-	self calloutAPIClass inUFFIContext: thisContext
+	self getCompiler
 ]
 
 { #category : #'accessing platform' }

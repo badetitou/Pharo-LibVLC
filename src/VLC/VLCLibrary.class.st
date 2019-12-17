@@ -26,8 +26,6 @@ Class {
 VLCLibrary class >> initialize [
 	"reset me when startup"
 	Smalltalk addToStartUpList: self.
-	"We need to load LibraryCore before using this one"
-	VLCLibraryCore uniqueInstance 
 ]
 
 { #category : #initialization }
@@ -39,6 +37,13 @@ VLCLibrary class >> reset [
 VLCLibrary class >> startUp: isImageStarting [
 
 	isImageStarting ifTrue: [ self reset ]
+]
+
+{ #category : #'class initialization' }
+VLCLibrary class >> uniqueInstance [ 
+	^ uniqueInstance ifNil: [ 
+		VLCLibraryCore uniqueInstance.
+		super uniqueInstance ]
 ]
 
 { #category : #core }

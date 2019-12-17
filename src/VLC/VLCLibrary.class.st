@@ -155,7 +155,7 @@ VLCLibrary >> detachToEventManager: anEventManager forEvent: aTypeOfEvent withCa
 
 { #category : #core }
 VLCLibrary >> free: somePointer [
-	^ self ffiCall: 'voic libvlc_free (void * somePointer)'
+	^ self ffiCall: 'void libvlc_free (void * somePointer)'
 ]
 
 { #category : #core }

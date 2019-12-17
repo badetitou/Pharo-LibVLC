@@ -11,6 +11,11 @@ VLCInstance >> createMediaFromPath: aPath [
 ]
 
 { #category : #creation }
+VLCInstance >> createMediaList [
+	^ VLCLibrary uniqueInstance mediaListNew: self
+]
+
+{ #category : #creation }
 VLCInstance >> createMediaListPlayer [
 	^ VLCLibrary uniqueInstance mediaListPlayerNew: self
 ]

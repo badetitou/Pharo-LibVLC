@@ -1,22 +1,60 @@
 Class {
 	#name : #VLCLibraryTest,
 	#superclass : #TestCase,
+	#traits : 'TVLCTestsResources',
+	#classTraits : 'TVLCTestsResources classTrait',
+	#instVars : [
+		'vlc'
+	],
 	#category : #'VLC-Tests'
 }
 
-{ #category : #resources }
-VLCLibraryTest >> resourcesFileReference [
-	| repo |
-	repo := (IceRepository registry
-		detect: [ :each | each includesPackageNamed: 'VLC-Tests' ]
-		ifNone: [ self
-				error:
-					'Please add a clone of this project to Iceberg to access to the resources' ])
-		location.
-	^ repo / 'res'
+{ #category : #running }
+VLCLibraryTest >> setUp [
+	super setUp.
+	vlc := VLCLibrary uniqueInstance createVLCInstance
 ]
 
-{ #category : #tests }
-VLCLibraryTest >> testGetVersion [
-	self assert: VLCLibrary uniqueInstance getVersion equals: '3.0.8 Vetinari'
+{ #category : #running }
+VLCLibraryTest >> tearDown [
+	VLCLibrary uniqueInstance release: vlc.
+	super tearDown
+]
+
+{ #category : #running }
+VLCLibraryTest >> testInstanceNewClass [
+	self assert: vlc class equals: VLCInstance
+]
+
+{ #category : #running }
+VLCLibraryTest >> testInstanceNewMediaFromPath [
+	| media |
+	"init"
+	media := (vlc createMediaFromPath: (self resourcesFileReference / 'Open.mp3') fullNameWithIndicator ).
+	"test"
+	self assert: media class equals: VLCMedia.
+	"tear down"
+	VLCLibrary uniqueInstance mediaRelease: media
+]
+
+{ #category : #running }
+VLCLibraryTest >> testInstanceNewMediaList [
+	| mediaList |
+	"init"
+	mediaList := vlc createMediaList.
+	"test"
+	self assert: mediaList class equals: VLCMediaList.
+	"tear down"
+	VLCLibrary uniqueInstance mediaListPlayerRelease: mediaList
+]
+
+{ #category : #running }
+VLCLibraryTest >> testInstanceNewMediaListPlayer [
+	| mediaListPlayer |
+	"init"
+	mediaListPlayer := vlc createMediaListPlayer.
+	"test"
+	self assert: mediaListPlayer class equals: VLCMediaListPlayer.
+	"tear down"
+	VLCLibrary uniqueInstance mediaListPlayerRelease: mediaListPlayer
 ]

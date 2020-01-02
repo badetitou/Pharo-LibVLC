@@ -188,7 +188,7 @@ VLCLibrary >> initialize [
 
 { #category : #initialization }
 VLCLibrary >> initializeVLCWithArguments: aCollectionOfString andNumberOfArgs: sizeOfCollectionOfString [
-	^ self ffiCall: 'void * libvlc_new(int sizeOfCollectionOfString, void * aCollectionOfString);'
+	^ self ffiCall: 'VLCInstance * libvlc_new(int sizeOfCollectionOfString, void * aCollectionOfString)'
 ]
 
 { #category : #'media player' }

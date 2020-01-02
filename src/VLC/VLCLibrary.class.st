@@ -172,7 +172,7 @@ VLCLibrary >> getCompiler [
 
 { #category : #'media player' }
 VLCLibrary >> getMediaInsideMediaPlayer: aMediaPlayer [
-	^ self ffiCall: 'void * libvlc_media_player_get_media(void* aMediaPlayer);'
+	^ self ffiCall: 'VLCMedia * libvlc_media_player_get_media(VLCMediaPlayer * aMediaPlayer)'
 ]
 
 { #category : #core }
@@ -619,7 +619,7 @@ VLCLibrary >> playMediaPlayer: aMediaPlayer [
 { #category : #'media player' }
 VLCLibrary >> positionMediaPlayer: aMediaPlayer [
 	"return a value between 0.0 and 1.0"
-	^ self ffiCall: 'float libvlc_media_player_get_position(void* aMediaPlayer);'
+	^ self ffiCall: 'float libvlc_media_player_get_position(VLCMediaPlayer * aMediaPlayer)'
 ]
 
 { #category : #'media player' }

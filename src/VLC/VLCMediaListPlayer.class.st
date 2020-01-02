@@ -11,7 +11,7 @@ VLCMediaListPlayer >> eventManager [
 
 { #category : #accessing }
 VLCMediaListPlayer >> isPlaying [
-	VLCLibrary uniqueInstance mediaListPlayerIsPlaying: self
+	^ VLCLibrary uniqueInstance mediaListPlayerIsPlaying: self
 ]
 
 { #category : #accessing }
@@ -21,7 +21,7 @@ VLCMediaListPlayer >> mediaList: aMediaList [
 
 { #category : #accessing }
 VLCMediaListPlayer >> mediaPlayer [
-	VLCLibrary uniqueInstance mediaListPlayerGetMediaPlayer: self
+	^ VLCLibrary uniqueInstance mediaListPlayerGetMediaPlayer: self
 ]
 
 { #category : #accessing }

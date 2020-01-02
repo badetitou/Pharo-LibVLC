@@ -271,7 +271,7 @@ VLCLibrary >> mediaDiscovererMediaList: aVLCMediaDiscoverer [
 
 { #category : #'media discovery' }
 VLCLibrary >> mediaDiscovererNew: aVLCInstance withName: aName [
-	^ self ffiCall: 'VLCMediaDiscoverer libvlc_media_discoverer_new (VLCInstance * aVLCInstance, String aName)'
+	^ self ffiCall: 'VLCMediaDiscoverer * libvlc_media_discoverer_new (VLCInstance * aVLCInstance, String aName)'
 ]
 
 { #category : #'media discovery' }
@@ -296,8 +296,9 @@ VLCLibrary >> mediaDiscovererStop: aVLCMediaDiscoverer [
 VLCLibrary >> mediaDiscovererlistGet: aVLCInstance category: aVLCMediaDiscovererCategory inDescriptions: aVLCMediaDiscovererDescription [
 	"Get media discoverer services by category."
 
-	^ self ffiCall:
-		  'int libvlc_media_discoverer_list_get (VLInstance * aVLCInstance, VLCMediaDiscovererCategory aVLCMediaDiscovererCategory, VLCMediaDiscovererDescription *** aVLCMediaDiscovererDescription)'
+	^ self
+		ffiCall:
+			'int libvlc_media_discoverer_list_get (VLCInstance * aVLCInstance, VLCMediaDiscovererCategory aVLCMediaDiscovererCategory, VLCMediaDiscovererDescription *** aVLCMediaDiscovererDescription)'
 ]
 
 { #category : #'media discovery' }

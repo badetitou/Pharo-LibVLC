@@ -8,3 +8,8 @@ Class {
 VLCMediaList >> addMedia: aVLCMedia [
 	^ VLCLibrary uniqueInstance mediaList: self addMedia: aVLCMedia
 ]
+
+{ #category : #adding }
+VLCMediaList >> removeIndex: anIndex [
+	^ VLCLibrary uniqueInstance mediaList: self removeIndex: anIndex
+]

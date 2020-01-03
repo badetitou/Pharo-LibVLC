@@ -293,12 +293,26 @@ VLCLibrary >> mediaDiscovererStop: aVLCMediaDiscoverer [
 ]
 
 { #category : #'media discovery' }
-VLCLibrary >> mediaDiscovererlistGet: aVLCInstance category: aVLCMediaDiscovererCategory inDescriptions: aVLCMediaDiscovererDescription [
-	"Get media discoverer services by category."
+VLCLibrary >> mediaDiscovererlistGet: aVLCInstance category: aVLCMediaDiscovererCategory inDescriptions: value [
+	"Get media discoverer services by category.
+example:
+
+arr := ExternalAddress allocate: ExternalAddress wordSize.
+vlc := VLCLibrary uniqueInstance createVLCInstance.
+nb := VLCLibrary uniqueInstance mediaDiscovererlistGet: vlc category: (VLCMediaDiscovererCategory libvlc_media_discoverer_localdirs) inDescriptions: arr.
+nb := VLCLibrary uniqueInstance mediaDiscovererlistGet: vlc category: (VLCMediaDiscovererCategory libvlc_media_discoverer_devices) inDescriptions: arr.
+nb := VLCLibrary uniqueInstance mediaDiscovererlistGet: vlc category: (VLCMediaDiscovererCategory libvlc_media_discoverer_podcasts) inDescriptions: arr.
+nb := VLCLibrary uniqueInstance mediaDiscovererlistGet: vlc category: (VLCMediaDiscovererCategory libvlc_media_discoverer_lan) inDescriptions: arr.
+
+a := (FFIExternalArray fromHandle: arr getHandle type: 'VLCMediaDiscovererDescription *' size: nb).
+
+desc := VLCMediaDiscovererDescription fromHandle: (a at: 3) getHandle.
+desc psz_longname readString.
+desc psz_name readString."
 
 	^ self
 		ffiCall:
-			'int libvlc_media_discoverer_list_get (VLCInstance * aVLCInstance, VLCMediaDiscovererCategory aVLCMediaDiscovererCategory, VLCMediaDiscovererDescription *** aVLCMediaDiscovererDescription)'
+			'size_t libvlc_media_discoverer_list_get (VLCInstance * aVLCInstance, VLCMediaDiscovererCategory aVLCMediaDiscovererCategory, void * * value)'
 ]
 
 { #category : #'media discovery' }

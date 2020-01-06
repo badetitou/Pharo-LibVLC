@@ -49,6 +49,11 @@ VLCLibraryCore >> initialize [
 ]
 
 { #category : #'accessing platform' }
+VLCLibraryCore >> macLibraryName [
+	^ '/Applications/VLC.app/Contents/MacOS/lib/libvlccore.dylib'
+]
+
+{ #category : #'accessing platform' }
 VLCLibraryCore >> unix32LibraryName [
 	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')
 		do: [ :path | 

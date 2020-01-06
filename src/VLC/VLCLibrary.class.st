@@ -203,6 +203,11 @@ VLCLibrary >> isMediaPlayerPlaying: aMediaPlayer [
 	^ self ffiCall: 'bool libvlc_media_player_is_playing(void* aMediaPlayer);'
 ]
 
+{ #category : #'accessing platform' }
+VLCLibrary >> macLibraryName [
+	^ '/Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib'
+]
+
 { #category : #media }
 VLCLibrary >> media: aMedia addOption: theOption [
 	"full example:

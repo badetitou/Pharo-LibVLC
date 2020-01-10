@@ -192,16 +192,10 @@ VLCLibrary >> initializeVLCWithArguments: aCollectionOfString andNumberOfArgs: s
 	^ self ffiCall: 'VLCInstance * libvlc_new(int sizeOfCollectionOfString, void * aCollectionOfString)'
 ]
 
-{ #category : #'media player' }
+{ #category : #'media player - deprecated' }
 VLCLibrary >> isMediaPlayerPlaying: aMediaPlayer [
-	"
-	| vlc media player |
-	vlc := VLCLibrary uniqueInstance.
-	media := vlc mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'.	
-	player := vlc createPlayerForMedia: media.
-	vlc isMediaPlayerPlaying: aMediaPlayer
-	"
-	^ self ffiCall: 'bool libvlc_media_player_is_playing(VLCMediaPlayer * aMediaPlayer)'
+	self deprecated: 'Use mediaPlayerIsPlaying: instead' transformWith: '`@receiver isMediaPlayerPlaying: `@arg' -> '`@receiver mediaPlayerIsPlaying: `@arg'.
+	^ self mediaPlayerIsPlaying: aMediaPlayer
 ]
 
 { #category : #'accessing platform' }
@@ -590,6 +584,12 @@ VLCLibrary >> mediaParseStop: aVLCMedia [
 ]
 
 { #category : #'media player' }
+VLCLibrary >> mediaPlayerIsPlaying: aMediaPlayer [
+
+	^ self ffiCall: 'bool libvlc_media_player_is_playing(VLCMediaPlayer * aMediaPlayer)'
+]
+
+{ #category : #'media player' }
 VLCLibrary >> mediaPlayerNewFromMedia: aVLCMedia [
 	"example:
 	
@@ -600,6 +600,22 @@ VLCLibrary >> mediaPlayerNewFromMedia: aVLCMedia [
 	"
 
 	^ self ffiCall: 'VLCMediaPlayer * libvlc_media_player_new_from_media(VLCMedia * aVLCMedia)'
+]
+
+{ #category : #'media player' }
+VLCLibrary >> mediaPlayerPause: aMediaPlayer [
+	^ self ffiCall: 'void * libvlc_media_player_pause(VLCMediaPlayer * aMediaPlayer)'
+]
+
+{ #category : #'media player' }
+VLCLibrary >> mediaPlayerPlay: aMediaPlayer [
+	"Play"
+	^ self ffiCall: 'int libvlc_media_player_play(VLCMediaPlayer * aMediaPlayer)'
+]
+
+{ #category : #'media player' }
+VLCLibrary >> mediaPlayerStopAsync: aMediaPlayer [
+	^ self ffiCall: 'int libvlc_media_player_stop_async(VLCMediaPlayer * aMediaPlayer);'
 ]
 
 { #category : #media }
@@ -626,28 +642,16 @@ VLCLibrary >> mediaSubitems: aVLCMedia [
 	^ self ffiCall: 'VLCMediaList libvlc_media_subitems (VLCMedia * aVLCMedia)'
 ]
 
-{ #category : #'media player' }
+{ #category : #'media player - deprecated' }
 VLCLibrary >> pauseMediaPlayer: aMediaPlayer [
-	"
-	| vlc media player |
-	vlc := VLCLibrary uniqueInstance.
-	media := vlc mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'.	
-	player := vlc createPlayerForMedia: media.
-	vlc pauseMediaPlayer: player
-	"
-	^ self ffiCall: 'void * libvlc_media_player_pause(VLCMediaPlayer * aMediaPlayer)'
+	self deprecated: 'Use mediaPlayerPause: instead' transformWith: '`@receiver pauseMediaPlayer: `@arg' -> '`@receiver mediaPlayerPause: `@arg'.
+	^ self mediaPlayerPause: aMediaPlayer
 ]
 
-{ #category : #'media player' }
+{ #category : #'media player - deprecated' }
 VLCLibrary >> playMediaPlayer: aMediaPlayer [
-	"
-	| vlc media player |
-	vlc := VLCLibrary uniqueInstance.
-	media := vlc mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'.	
-	player := vlc createPlayerForMedia: media.
-	vlc playMediaPlayer: player
-	"
-	^ self ffiCall: 'int libvlc_media_player_play(VLCMediaPlayer * aMediaPlayer);'
+	self deprecated: 'Use mediaPlayerPlay instead' transformWith: '`@receiver playMediaPlayer: `@arg' -> '`@receiver mediaPlayerPlay: `@arg'.
+	^ self mediaPlayerPlay: aMediaPlayer
 ]
 
 { #category : #'media player' }
@@ -719,7 +723,7 @@ VLCLibrary >> unix64LibraryName [
 VLCLibrary >> videoSetCallbacksMediaPlayer: aMediaPlayer lockCallback: lock unlockCallback: unlock displayCallback: display opaque: opaque [
 	"Set callbacks and private data to render decoded video to a custom area in memory."
 
-	^ self ffiCall: 'void libvlc_video_set_callbacks (VLCMediaPlayer * mp, VLCVideoLockCallback lock, VLCVideoUnlockCallback unlock, VLCVideoDisplayCallback display, void * opaque)'
+	^ self ffiCall: 'void libvlc_video_set_callbacks (VLCMediaPlayer * aMediaPlayer, VLCVideoLockCallback lock, VLCVideoUnlockCallback unlock, VLCVideoDisplayCallback display, void * opaque)'
 ]
 
 { #category : #'media player' }

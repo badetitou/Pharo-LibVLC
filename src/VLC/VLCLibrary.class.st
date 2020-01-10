@@ -97,19 +97,6 @@ On systems that support it, the POSIX monotonic clock is used."
 	^ self ffiCall: 'int64 libvlc_clock(void)	'
 ]
 
-{ #category : #'media player' }
-VLCLibrary >> createPlayerForMedia: aVLCMedia [
-	"example:
-	
-	| media player vlc |
-	vlc := VLCLibrary uniqueInstance.
-	media := vlc mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'.	
-	player := vlc createPlayerForMedia: media.
-	"
-
-	^ self ffiCall: 'void* libvlc_media_player_new_from_media(void* aVLCMedia);'
-]
-
 { #category : #initialization }
 VLCLibrary >> createVLCInstance [
 	^ self ffiCall: 'VLCInstance * libvlc_new()'
@@ -214,7 +201,7 @@ VLCLibrary >> isMediaPlayerPlaying: aMediaPlayer [
 	player := vlc createPlayerForMedia: media.
 	vlc isMediaPlayerPlaying: aMediaPlayer
 	"
-	^ self ffiCall: 'bool libvlc_media_player_is_playing(void* aMediaPlayer);'
+	^ self ffiCall: 'bool libvlc_media_player_is_playing(VLCMediaPlayer * aMediaPlayer)'
 ]
 
 { #category : #'accessing platform' }
@@ -602,6 +589,19 @@ VLCLibrary >> mediaParseStop: aVLCMedia [
 	^ self ffiCall: 'void libvlc_media_parse_stop (VLCMedia * aVLCMedia)'
 ]
 
+{ #category : #'media player' }
+VLCLibrary >> mediaPlayerNewFromMedia: aVLCMedia [
+	"example:
+	
+	| media player vlc |
+	vlc := VLCLibrary uniqueInstance.
+	media := vlc mediaFileFromStringPath: '/home/badetitou/Musique/Coda.mp3'.	
+	player := vlc mediaPlayerNewFromMedia: media.
+	"
+
+	^ self ffiCall: 'VLCMediaPlayer * libvlc_media_player_new_from_media(VLCMedia * aVLCMedia)'
+]
+
 { #category : #media }
 VLCLibrary >> mediaRelease: aVLCMedia [
 	"Decrement the reference count of a media descriptor object."
@@ -635,7 +635,7 @@ VLCLibrary >> pauseMediaPlayer: aMediaPlayer [
 	player := vlc createPlayerForMedia: media.
 	vlc pauseMediaPlayer: player
 	"
-	^ self ffiCall: 'void * libvlc_media_player_pause(void* aMediaPlayer);'
+	^ self ffiCall: 'void * libvlc_media_player_pause(VLCMediaPlayer * aMediaPlayer)'
 ]
 
 { #category : #'media player' }
@@ -647,7 +647,7 @@ VLCLibrary >> playMediaPlayer: aMediaPlayer [
 	player := vlc createPlayerForMedia: media.
 	vlc playMediaPlayer: player
 	"
-	^ self ffiCall: 'int libvlc_media_player_play(void* aMediaPlayer);'
+	^ self ffiCall: 'int libvlc_media_player_play(VLCMediaPlayer * aMediaPlayer);'
 ]
 
 { #category : #'media player' }
@@ -692,7 +692,7 @@ VLCLibrary >> setUserAgent: aVLCInstance name: id http: version [
 
 { #category : #'media player' }
 VLCLibrary >> setXWindows: indentifier forMediaPlayer: aMediaPlayer [
-	^ self ffiCall: 'void libvlc_media_player_set_xwindow(void* aMediaPlayer, int indentifier);'
+	^ self ffiCall: 'void libvlc_media_player_set_xwindow(VLCMediaPlayer * aMediaPlayer, int indentifier);'
 ]
 
 { #category : #'accessing platform' }

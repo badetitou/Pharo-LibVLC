@@ -660,7 +660,7 @@ VLCLibrary >> positionMediaPlayer: aMediaPlayer [
 VLCLibrary >> positionMediaPlayer: aMediaPlayer setAt: thePositionAsFloatBetweenOAnd1 [
 	"return a value between 0.0 and 1.0"
 
-	^ self ffiCall: 'float libvlc_media_player_set_position(void* aMediaPlayer, float thePositionAsFloatBetweenOAnd1, true);'
+	^ self ffiCall: 'void libvlc_video_set_callbacks (VLCMediaPlayer * mp, VLCVideoLockCallback lock, VLCVideoUnlockCallback unlock, VLCVideoDisplayCallback display, void * opaque)'
 ]
 
 { #category : #core }
@@ -713,6 +713,19 @@ VLCLibrary >> unix64LibraryName [
 			libraryPath := path asFileReference / 'libvlc.so'.
 			libraryPath exists ifTrue: [ ^ libraryPath fullName ] ].
 	self error: 'Cannot locate vlc library. Please check if it installed on your system'
+]
+
+{ #category : #'media player' }
+VLCLibrary >> videoSetCallbacksMediaPlayer: aMediaPlayer lockCallback: lock unlockCallback: unlock displayCallback: display opaque: opaque [
+	"Set callbacks and private data to render decoded video to a custom area in memory."
+
+	^ self ffiCall: 'void libvlc_video_set_callbacks (VLCMediaPlayer * mp, VLCVideoLockCallback lock, VLCVideoUnlockCallback unlock, VLCVideoDisplayCallback display, void * opaque)'
+]
+
+{ #category : #'media player' }
+VLCLibrary >> videoSetFormatMediaPlayer: mp chroma: chroma width: width height: height pitch: pitch [
+
+	^ self ffiCall: 'void libvlc_video_set_format (VLCMediaPlayer * mp, const String chroma, int width, int height, int pitch)'
 ]
 
 { #category : #'accessing platform' }

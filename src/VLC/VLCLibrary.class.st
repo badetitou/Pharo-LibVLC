@@ -29,8 +29,21 @@ VLCLibrary class >> initialize [
 ]
 
 { #category : #initialization }
-VLCLibrary class >> reset [ 
+VLCLibrary class >> reset [
+	<script>
 	uniqueInstance := nil
+]
+
+{ #category : #'class initialization' }
+VLCLibrary class >> setEnvironment [
+	"On mac please set VLC plugin path..."
+
+	OSPlatform current isMacOSX
+		ifTrue: [ OSEnvironment current
+				at: 'VLC_PLUGIN_PATH'
+				ifAbsent: [ OSEnvironment current
+						setEnv: 'VLC_PLUGIN_PATH'
+						value: '/Applications/VLC.app/Contents/MacOS/plugins/' ] ]
 ]
 
 { #category : #'class initialization' }
@@ -42,6 +55,7 @@ VLCLibrary class >> startUp: isImageStarting [
 { #category : #'class initialization' }
 VLCLibrary class >> uniqueInstance [ 
 	^ uniqueInstance ifNil: [ 
+		self setEnvironment.
 		VLCLibraryCore uniqueInstance.
 		super uniqueInstance ]
 ]

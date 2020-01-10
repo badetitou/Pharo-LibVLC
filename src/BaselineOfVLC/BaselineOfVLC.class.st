@@ -12,7 +12,13 @@ BaselineOfVLC >> baseline: spec [
 		do: [ 
 			self defineDependencies: spec.
 			self definePackages: spec.
-			self defineGroups: spec ]
+			self defineGroups: spec ].
+	spec
+		for: #'pharo7.x'
+		do: [ 
+			spec
+				package: 'VLC-Pharo7';
+				package: 'VLC' with: [ spec requires: 'VLC-Pharo7' ] ].
 ]
 
 { #category : #baselines }

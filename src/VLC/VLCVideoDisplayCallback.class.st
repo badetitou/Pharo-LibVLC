@@ -33,7 +33,7 @@ Class {
 
 { #category : #'instance creation' }
 VLCVideoDisplayCallback class >> fnSpec [
-	^ #(void (void * opaque, void * picture))
+	^ #(void (VLCSDLContext * opaque, void * picture))
 ]
 
 { #category : #'instance creation' }

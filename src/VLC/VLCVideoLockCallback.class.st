@@ -33,7 +33,7 @@ Class {
 
 { #category : #'instance creation' }
 VLCVideoLockCallback class >> fnSpec [
-	^ #(void (void *opaque, void **planes))
+	^ #(void (VLCSDLContext *opaque, void **planes))
 ]
 
 { #category : #'instance creation' }

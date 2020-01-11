@@ -723,7 +723,7 @@ VLCLibrary >> unix64LibraryName [
 VLCLibrary >> videoSetCallbacksMediaPlayer: aMediaPlayer lockCallback: lock unlockCallback: unlock displayCallback: display opaque: opaque [
 	"Set callbacks and private data to render decoded video to a custom area in memory."
 
-	^ self ffiCall: 'void libvlc_video_set_callbacks (VLCMediaPlayer * aMediaPlayer, VLCVideoLockCallback lock, VLCVideoUnlockCallback unlock, VLCVideoDisplayCallback display, void * opaque)'
+	^ self ffiCall: 'void libvlc_video_set_callbacks (VLCMediaPlayer * aMediaPlayer, VLCVideoLockCallback lock, VLCVideoUnlockCallback unlock, VLCVideoDisplayCallback display, VLCSDLContext * opaque)'
 ]
 
 { #category : #'media player' }

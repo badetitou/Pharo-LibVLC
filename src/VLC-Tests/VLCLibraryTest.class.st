@@ -36,25 +36,3 @@ VLCLibraryTest >> testInstanceNewMediaFromPath [
 	"tear down"
 	VLCLibrary uniqueInstance mediaRelease: media
 ]
-
-{ #category : #running }
-VLCLibraryTest >> testInstanceNewMediaList [
-	| mediaList |
-	"init"
-	mediaList := vlc createMediaList.
-	"test"
-	self assert: mediaList class equals: VLCMediaList.
-	"tear down"
-	VLCLibrary uniqueInstance mediaListPlayerRelease: mediaList
-]
-
-{ #category : #running }
-VLCLibraryTest >> testInstanceNewMediaListPlayer [
-	| mediaListPlayer |
-	"init"
-	mediaListPlayer := vlc createMediaListPlayer.
-	"test"
-	self assert: mediaListPlayer class equals: VLCMediaListPlayer.
-	"tear down"
-	VLCLibrary uniqueInstance mediaListPlayerRelease: mediaListPlayer
-]

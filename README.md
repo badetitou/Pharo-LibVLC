@@ -17,7 +17,7 @@ Metacello new
   load.
 ```
 
-> We should be able to execute `VLCLibrary uniqueInstance getVersion`
+> You should be able to execute `VLCLibrary uniqueInstance getVersion`
 
 ## Quick example
 

@@ -21,4 +21,11 @@ Metacello new
 
 ## Quick example
 
+```st
+vlc := VLCLibrary uniqueInstance createVLCInstance.
+media := vlc createMediaFromPath: 'my/file/path.mp3'.
+mediaPlayer := VLCLibrary uniqueInstance mediaPlayerNewFromMedia: media.
+mediaPlayer play
+```
+
 ## Documentation

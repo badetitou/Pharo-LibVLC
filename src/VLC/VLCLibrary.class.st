@@ -205,22 +205,8 @@ VLCLibrary >> macLibraryName [
 
 { #category : #media }
 VLCLibrary >> media: aMedia addOption: theOption [
-	"full example:
-
-colArguments := OrderedCollection new.
-colArguments add: '--no-video'.
-vlc := VLCLibrary uniqueInstance createVLCWithArguments: colArguments.
-
-mediaList := VLCLibrary uniqueInstance createMediaListFromInstance: vlc.
-media := VLCLibrary uniqueInstance mediaFileForInstance: vlc fromStringPath: '/home/badetitou/myVideo.mkv'.
-VLCLibrary uniqueInstance addMedia: media inMediaList: mediaList.
-
-VLCLibrary uniqueInstance addOption: ':sout=#transcode{vcodec=h264,vb=150,acodec=mp4a,ab=50,mono,channels=1}:standard{mux=ts,dst=:8484/vlc_stream.mp4,access=http}' toMedia: media.
-
-mediaListPlayer := VLCLibrary uniqueInstance createListPlayerForInstance: vlc.
-VLCLibrary uniqueInstance setMediaList: mediaList forListPlayer: mediaListPlayer.
-VLCLibrary uniqueInstance playListPlayer: mediaListPlayer."
-	^ self ffiCall: 'void* libvlc_media_add_option(VLCMedia * aMedia, String theOption)'
+	"Add an option to the media."
+	^ self ffiCall: 'void libvlc_media_add_option(VLCMedia * aMedia, String theOption)'
 ]
 
 { #category : #media }
@@ -253,8 +239,15 @@ VLCLibrary >> media: aVLCMedia parseWithOptions: aVLCMediaParseFlag timeout: tim
 
 { #category : #media }
 VLCLibrary >> media: aVLCMedia setMeta: aVLCMeta with: newMetaValue [
-	"Read the meta of the media."
+	"Set the meta of the media (this function will not save the meta, call #mediaSaveMeta: in order to save the meta)."
 	^ self ffiCall: 'void libvlc_media_set_meta(VLCMedia * aVLCMedia, VLCMetaT aVLCMeta, String newMetaValue)'
+]
+
+{ #category : #media }
+VLCLibrary >> media: aVLCMedia setUserData: pUserData [
+	"Sets media descriptor's user_data."
+
+	^ self ffiCall: 'void libvlc_media_set_user_data (VLCMedia * aVLCMedia, void * pUserData)'
 ]
 
 { #category : #'media discovery' }
@@ -325,13 +318,13 @@ VLCLibrary >> mediaDiscovererlistRelease: aVLCMediaDiscovererDescription count: 
 { #category : #media }
 VLCLibrary >> mediaDuplicate: aVLCMedia [
 	"Get the media resource locator (mrl) from a media descriptor object."
-	^ self ffiCall: 'VLCMedia libvlc_media_duplicate(VLCMedia * aVLCMedia)'
+	^ self ffiCall: 'VLCMedia * libvlc_media_duplicate(VLCMedia * aVLCMedia)'
 ]
 
 { #category : #media }
 VLCLibrary >> mediaEventManager: aVLCMedia [
 	"Get event manager from media descriptor object."
-	^ self ffiCall: 'VLCEventManager libvlc_media_event_manager (VLCMedia * aVLCMedia)'
+	^ self ffiCall: 'VLCEventManager * libvlc_media_event_manager (VLCMedia * aVLCMedia)'
 ]
 
 { #category : #media }
@@ -348,14 +341,27 @@ VLCLibrary >> mediaGetMRL: aVLCMedia [
 
 { #category : #media }
 VLCLibrary >> mediaGetParsedStatus: aVLCMedia [
-	"Stop the parsing of the media."
+	"Get Parsed status for media descriptor object."
 	^ self ffiCall: 'VLCMediaParsedStatus libvlc_media_get_parsed_status (VLCMedia * aVLCMedia)'
 ]
 
 { #category : #media }
 VLCLibrary >> mediaGetState: aVLCMedia [ 
-	"Save the meta previously set."
+	"Get current state of media descriptor object."
 	^ self ffiCall: 'VLCState libvlc_media_get_state(VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaGetType: aVLCMedia [
+	"Get the media type of the media descriptor object."
+	^ self ffiCall: 'VLCMediaType libvlc_media_get_type (VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaGetUserData: aVLCMedia [
+	"Get media descriptor's user_data."
+
+	^ self ffiCall: 'void * libvlc_media_get_user_data (VLCMedia * aVLCMedia)'
 ]
 
 { #category : #'media list' }
@@ -562,18 +568,34 @@ VLCLibrary >> mediaListUnlock: aVLCMediaList [
 ]
 
 { #category : #media }
+VLCLibrary >> mediaNew: aVLCInstance asNode: aNodeNameString [
+	"Create a media as an empty node with a given name."
+	^ self ffiCall: 'VLCMedia * libvlc_media_new_as_node (VLCInstance * aVLCInstance, String aNodeNameString)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaNew: aVLCInstance callbacksOpen: aStringPath read: aReadCallback seek: aSeekCallback close: aCloseCallback opaque: anOpaque [
+	"Create a media with custom callbacks to read the data from."
+	^ self
+		ffiCall:
+			'VLCMedia * libvlc_media_new_callbacks (VLCInstance *aVLCInstance, VLCMediaOpenCallback open_cb, VLCMediaReadCallback read_cb, VLCMediaSeekCallback seek_cb, VLCMediaCloseCallback close_cb, void *opaque)'
+]
+
+{ #category : #media }
 VLCLibrary >> mediaNew: aVLCInstance fd: fileDescriptor [
+	"Create a media for an already open file descriptor."
 	^ self ffiCall: 'VLCMedia * libvlc_media_new_fd(VLCInstance * aVLCInstance, int fileDescriptor)'
 ]
 
 { #category : #media }
 VLCLibrary >> mediaNew: aVLCInstance location: aLocation [
+	"Create a media with a certain given media resource location, for instance a valid URL."
 	^ self ffiCall: 'VLCMedia * libvlc_media_new_location (VLCInstance * aVLCInstance, String aLocation)'
 ]
 
 { #category : #media }
 VLCLibrary >> mediaNew: aVLCInstance path: aStringPath [
-	"ex self mediaNew: vlc path: '/home/badetitou/Musique/Coda.mp3'"
+	"Create a media for a certain file path."
 	^ self ffiCall: 'VLCMedia * libvlc_media_new_path(VLCInstance * aVLCInstance, String aStringPath)'
 ]
 
@@ -649,7 +671,7 @@ VLCLibrary >> mediaSaveMeta: aVLCMedia [
 { #category : #media }
 VLCLibrary >> mediaSubitems: aVLCMedia [
 	"Get subitems of media descriptor object."
-	^ self ffiCall: 'VLCMediaList libvlc_media_subitems (VLCMedia * aVLCMedia)'
+	^ self ffiCall: 'VLCMediaList * libvlc_media_subitems (VLCMedia * aVLCMedia)'
 ]
 
 { #category : #'media player - deprecated' }

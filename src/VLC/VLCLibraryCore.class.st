@@ -60,7 +60,7 @@ VLCLibraryCore >> unix32LibraryName [
 			| libraryPath |
 			libraryPath := path asFileReference / 'libvlccore.so'.
 			libraryPath exists ifTrue: [ ^ libraryPath fullName ] ].
-	self error: 'Cannot locate vlc library. Please check if it installed on your system'
+	self error: 'Cannot locate vlccore library. Please check if it installed on your system'
 ]
 
 { #category : #'accessing platform' }
@@ -70,7 +70,7 @@ VLCLibraryCore >> unix64LibraryName [
 			| libraryPath |
 			libraryPath := path asFileReference / 'libvlccore.so'.
 			libraryPath exists ifTrue: [ ^ libraryPath fullName ] ].
-	self error: 'Cannot locate vlc library. Please check if it installed on your system'
+	self error: 'Cannot locate vlccore library. Please check if it installed on your system'
 ]
 
 { #category : #'accessing platform' }

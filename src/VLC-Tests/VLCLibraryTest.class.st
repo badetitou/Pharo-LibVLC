@@ -3,36 +3,17 @@ Class {
 	#superclass : #TestCase,
 	#traits : 'TVLCTestsResources',
 	#classTraits : 'TVLCTestsResources classTrait',
-	#instVars : [
-		'vlc'
-	],
 	#category : #'VLC-Tests'
 }
 
-{ #category : #running }
-VLCLibraryTest >> setUp [
-	super setUp.
-	vlc := VLCLibrary uniqueInstance createVLCInstance
-]
-
-{ #category : #running }
-VLCLibraryTest >> tearDown [
-	VLCLibrary uniqueInstance release: vlc.
-	super tearDown
-]
-
-{ #category : #running }
+{ #category : #tests }
 VLCLibraryTest >> testInstanceNewClass [
+	| vlc |
+	vlc := VLCLibrary uniqueInstance createVLCInstance.
 	self assert: vlc class equals: VLCInstance
 ]
 
-{ #category : #running }
-VLCLibraryTest >> testInstanceNewMediaFromPath [
-	| media |
-	"init"
-	media := (vlc createMediaFromPath: (self resourcesFileReference / 'Open.mp3') fullNameWithIndicator ).
-	"test"
-	self assert: media class equals: VLCMedia.
-	"tear down"
-	VLCLibrary uniqueInstance mediaRelease: media
+{ #category : #tests }
+VLCLibraryTest >> testRessourcesExist [
+	self assert: (self resourcesFileReference / 'Open.mp3') asFileReference exists
 ]

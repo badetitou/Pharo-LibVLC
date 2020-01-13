@@ -583,6 +583,16 @@ VLCLibrary >> mediaParseStop: aVLCMedia [
 	^ self ffiCall: 'void libvlc_media_parse_stop (VLCMedia * aVLCMedia)'
 ]
 
+{ #category : #'as yet unclassified' }
+VLCLibrary >> mediaPlayer: aMediaPlayer setMedia: aVLCMedia [
+	^ self ffiCall: 'void libvlc_media_player_get_media (VLCMediaPlayer * aMediaPlayer, VLCMedia * aVLCMedia)'
+]
+
+{ #category : #'media player' }
+VLCLibrary >> mediaPlayerGetMedia: aMediaPlayer [
+	^ self ffiCall: 'VLCMedia * libvlc_media_player_get_media (VLCMediaPlayer * aMediaPlayer)'
+]
+
 { #category : #'media player' }
 VLCLibrary >> mediaPlayerIsPlaying: aMediaPlayer [
 

@@ -1,6 +1,10 @@
-# Pharo-LibVLC
+# Pharo-LibVLC <!-- omit in toc -->
 
-[![Pharo-LibVLC](https://travis-ci.com/badetitou/Pharo-LibVLC.svg?branch=master)](https://travis-ci.com/badetitou/Pharo-LibVLC)
+- [Install](#install)
+  - [Linux](#linux)
+- [Quick example](#quick-example)
+- [Documentation](#documentation)
+
 [![Pharo version](https://img.shields.io/badge/Pharo-8.0-%23aac9ff.svg)](https://pharo.org/download)
 
 Binding FFI of [libvlc](https://www.videolan.org/developers/vlc/doc/doxygen/html/group__libvlc.html) for [Pharo](http://pharo.org/) 
@@ -20,11 +24,24 @@ Metacello new
 
 > You should be able to execute `VLCLibrary uniqueInstance getVersion`
 
+### Linux
+
+If you work on linux, please check that `libvlc` and `libvlccore` are in your path.
+To do so, you can execute `whereis libvlc` and `whereis libvlccore`.
+
+If the `whereis` command return something like:
+
+- `libvlccore: /usr/lib/libvlccore.so` → OK
+- `libvlccore: ` → It means you didn't install correctly the libraries
+- `libvlccore: /usr/lib/libvlccore.so.x` → It means you've installed a specific version of the library. To use it with pharo please create a symbolic link without the ".x" → `ln -s /usr/lib/libvlccore.so.x /usr/lib/libvlccore.so`
+
+
 ## Quick example
 
 ```st
 vlc := VLCLibrary uniqueInstance createVLCInstance.
-media := vlc createMediaFromPath: 'my/file/path.mp3'.
+"do not use accentuated characters for the path"
+media := vlc createMediaFromPath: '/my/file/path.mp3'.
 mediaPlayer := VLCLibrary uniqueInstance mediaPlayerNewFromMedia: media.
 mediaPlayer play
 ```

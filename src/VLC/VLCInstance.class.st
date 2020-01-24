@@ -12,7 +12,7 @@ VLCInstance >> createMediaDiscovererNamed: aStringName [
 { #category : #creation }
 VLCInstance >> createMediaFromPath: aPath [
 	"self createMediaFromPath: '/home/badetitou/Musique/Coda.mp3'"
-	^ VLCLibrary uniqueInstance mediaNew: self path: aPath
+	^ VLCLibrary uniqueInstance mediaNew: self path: (aPath encodeWith: #utf8)
 ]
 
 { #category : #creation }
@@ -23,4 +23,9 @@ VLCInstance >> createMediaList [
 { #category : #creation }
 VLCInstance >> createMediaListPlayer [
 	^ VLCLibrary uniqueInstance mediaListPlayerNew: self
+]
+
+{ #category : #creation }
+VLCInstance >> vlcRelease [
+	^ VLCLibrary uniqueInstance release: self
 ]

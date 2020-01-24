@@ -4,6 +4,7 @@ Class {
 	#classVars : [
 		'libvlc_media_parsed_status_done',
 		'libvlc_media_parsed_status_failed',
+		'libvlc_media_parsed_status_not_started',
 		'libvlc_media_parsed_status_skipped',
 		'libvlc_media_parsed_status_timeout'
 	],
@@ -12,7 +13,9 @@ Class {
 
 { #category : #'enum declaration' }
 VLCMediaParsedStatus class >> enumDecl [
-	^ #(libvlc_media_parsed_status_skipped 1
+	^ #(
+libvlc_media_parsed_status_not_started 0
+libvlc_media_parsed_status_skipped 1
 libvlc_media_parsed_status_failed 2
 libvlc_media_parsed_status_timeout 3
 libvlc_media_parsed_status_done 4)
@@ -20,11 +23,13 @@ libvlc_media_parsed_status_done 4)
 
 { #category : #'enum declaration' }
 VLCMediaParsedStatus class >> initialize [
+	"self rebuildEnumAccessors"
 	self initializeEnumeration
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing enum' }
 VLCMediaParsedStatus class >> libvlc_media_parsed_status_done [
+	"This method was automatically generated"
 	^ libvlc_media_parsed_status_done
 ]
 
@@ -33,8 +38,9 @@ VLCMediaParsedStatus class >> libvlc_media_parsed_status_done: anObject [
 	libvlc_media_parsed_status_done := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing enum' }
 VLCMediaParsedStatus class >> libvlc_media_parsed_status_failed [
+	"This method was automatically generated"
 	^ libvlc_media_parsed_status_failed
 ]
 
@@ -43,8 +49,15 @@ VLCMediaParsedStatus class >> libvlc_media_parsed_status_failed: anObject [
 	libvlc_media_parsed_status_failed := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing enum' }
+VLCMediaParsedStatus class >> libvlc_media_parsed_status_not_started [
+	"This method was automatically generated"
+	^ libvlc_media_parsed_status_not_started
+]
+
+{ #category : #'accessing enum' }
 VLCMediaParsedStatus class >> libvlc_media_parsed_status_skipped [
+	"This method was automatically generated"
 	^ libvlc_media_parsed_status_skipped
 ]
 
@@ -53,8 +66,9 @@ VLCMediaParsedStatus class >> libvlc_media_parsed_status_skipped: anObject [
 	libvlc_media_parsed_status_skipped := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing enum' }
 VLCMediaParsedStatus class >> libvlc_media_parsed_status_timeout [
+	"This method was automatically generated"
 	^ libvlc_media_parsed_status_timeout
 ]
 

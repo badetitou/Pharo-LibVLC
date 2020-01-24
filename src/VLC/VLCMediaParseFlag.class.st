@@ -13,11 +13,11 @@ Class {
 
 { #category : #'class initialization' }
 VLCMediaParseFlag class >> enumDecl [
-	^ #(libvlc_media_parse_local 1
-libvlc_media_parse_network 2
-libvlc_media_fetch_local 3
+	^ #(libvlc_media_parse_local 0
+libvlc_media_parse_network 1
+libvlc_media_fetch_local 2
 libvlc_media_fetch_network 4
-libvlc_media_do_interact 5)
+libvlc_media_do_interact 8)
 ]
 
 { #category : #'class initialization' }

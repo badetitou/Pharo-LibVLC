@@ -12,10 +12,10 @@ Class {
 
 { #category : #'enum declaration' }
 VLCTrackT class >> enumDecl [
-	^ #(libvlc_track_unknown 1
-libvlc_track_audio 2
-libvlc_track_video 3
-libvlc_track_text 4)
+	^ #(libvlc_track_unknown -1
+libvlc_track_audio 0
+libvlc_track_video 1
+libvlc_track_text 2)
 ]
 
 { #category : #'enum declaration' }

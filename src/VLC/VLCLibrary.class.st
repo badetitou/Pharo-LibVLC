@@ -233,7 +233,31 @@ VLCLibrary >> media: aVLCMedia getStats: aVLCMediaStats [
 
 { #category : #media }
 VLCLibrary >> media: aVLCMedia parseWithOptions: aVLCMediaParseFlag timeout: timeout [ 
-	"Parse the media asynchronously with options."
+	"Parse the media asynchronously with options.
+
+This fetches (local or network) art, meta data and/or tracks information.
+
+To track when this is over you can listen to libvlc_MediaParsedChanged event. However if this functions returns an error, you will not receive any events.
+
+It uses a flag to specify parse options (see libvlc_media_parse_flag_t). All these flags can be combined. By default, media is parsed if it's a local file.
+
+Note
+    Parsing can be aborted with libvlc_media_parse_stop().
+
+See also
+    libvlc_MediaParsedChanged 
+    libvlc_media_get_meta 
+    libvlc_media_tracks_get 
+    libvlc_media_get_parsed_status 
+    libvlc_media_parse_flag_t
+
+Parameters
+    p_md	media descriptor object
+    parse_flag	parse options:
+    timeout	maximum time allowed to preparse the media. If -1, the default 'preparse-timeout' option will be used as a timeout. If 0, it will wait indefinitely. If > 0, the timeout will be used (in milliseconds).
+
+Returns
+    -1 in case of error, 0 otherwise "
 	^ self ffiCall: 'int libvlc_media_parse_with_options (VLCMedia * aVLCMedia, VLCMediaParseFlag aVLCMediaParseFlag, int timeout)'
 ]
 

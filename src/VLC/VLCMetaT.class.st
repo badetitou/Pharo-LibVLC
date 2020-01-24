@@ -34,32 +34,32 @@ Class {
 
 { #category : #'enum declaration' }
 VLCMetaT class >> enumDecl [
-	^ #(libvlc_meta_Title 1 
-	libvlc_meta_Artist 2
-	libvlc_meta_Genre 3 
-	libvlc_meta_Copyright 4 
-	libvlc_meta_Album 5 
-	libvlc_meta_TrackNumber 6 
-	libvlc_meta_Description 7 
-	libvlc_meta_Rating 8 
-	libvlc_meta_Date 9 
-	libvlc_meta_Setting 10 
-	libvlc_meta_URL 11 
-	libvlc_meta_Language 12 
-	libvlc_meta_NowPlaying 13 
-	libvlc_meta_Publisher 14 
-	libvlc_meta_EncodedBy 15 
-	libvlc_meta_ArtworkURL 16 
-	libvlc_meta_TrackID 17 
-	libvlc_meta_TrackTotal 18 
-	libvlc_meta_Director 19 
-	libvlc_meta_Season 20 
-	libvlc_meta_Episode 21 
-	libvlc_meta_ShowName 22 
-	libvlc_meta_Actors 23 
-	libvlc_meta_AlbumArtist 24 
-	libvlc_meta_DiscNumber 25 
-	libvlc_meta_DiscTotal 26)
+	^ #(libvlc_meta_Title 0 
+	libvlc_meta_Artist 1
+	libvlc_meta_Genre 2
+	libvlc_meta_Copyright 3
+	libvlc_meta_Album 4
+	libvlc_meta_TrackNumber 5
+	libvlc_meta_Description 6 
+	libvlc_meta_Rating 7
+	libvlc_meta_Date 8
+	libvlc_meta_Setting 9
+	libvlc_meta_URL 10
+	libvlc_meta_Language 11
+	libvlc_meta_NowPlaying 12 
+	libvlc_meta_Publisher 13
+	libvlc_meta_EncodedBy 14 
+	libvlc_meta_ArtworkURL 15
+	libvlc_meta_TrackID 16
+	libvlc_meta_TrackTotal 17
+	libvlc_meta_Director 18
+	libvlc_meta_Season 19
+	libvlc_meta_Episode 20
+	libvlc_meta_ShowName 21 
+	libvlc_meta_Actors 22 
+	libvlc_meta_AlbumArtist 23
+	libvlc_meta_DiscNumber 24 
+	libvlc_meta_DiscTotal 25)
 ]
 
 { #category : #'enum declaration' }

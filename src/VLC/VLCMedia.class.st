@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #acccessing }
+VLCMedia >> album [
+	^ VLCLibrary uniqueInstance media: self getMeta: VLCMetaT libvlc_meta_Album
+]
+
+{ #category : #acccessing }
 VLCMedia >> artist [
 	^ VLCLibrary uniqueInstance media: self getMeta: VLCMetaT libvlc_meta_Artist
 ]

@@ -25,6 +25,11 @@ VLCMedia >> parseLocal [
 ]
 
 { #category : #acccessing }
+VLCMedia >> parseStatus [
+	^ VLCLibrary uniqueInstance mediaGetParsedStatus: self
+]
+
+{ #category : #acccessing }
 VLCMedia >> parseWithOption: aVLCMediaParseFlag timeout: aTimeOut [
 	^ VLCLibrary uniqueInstance media: self parseWithOptions: aVLCMediaParseFlag timeout: aTimeOut.
 ]
@@ -32,6 +37,11 @@ VLCMedia >> parseWithOption: aVLCMediaParseFlag timeout: aTimeOut [
 { #category : #acccessing }
 VLCMedia >> title [
 	^ VLCLibrary uniqueInstance media: self getMeta: VLCMetaT libvlc_meta_Title
+]
+
+{ #category : #acccessing }
+VLCMedia >> trackNumber [
+	^ VLCLibrary uniqueInstance media: self getMeta: VLCMetaT libvlc_meta_TrackNumber
 ]
 
 { #category : #acccessing }

@@ -10,6 +10,16 @@ VLCMediaList >> addMedia: aVLCMedia [
 ]
 
 { #category : #adding }
+VLCMediaList >> count [
+	^ VLCLibrary uniqueInstance mediaListCount: self
+]
+
+{ #category : #adding }
+VLCMediaList >> insertMedia: aVLCMedia at: anIndex [
+	^ VLCLibrary uniqueInstance mediaList: self insertMedia: aVLCMedia at: anIndex
+]
+
+{ #category : #adding }
 VLCMediaList >> removeIndex: anIndex [
 	^ VLCLibrary uniqueInstance mediaList: self removeIndex: anIndex
 ]

@@ -4,7 +4,7 @@ Class {
 	#category : #'VLC-Structure'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #api }
 VLCMediaPlayer >> getMedia [
 	VLCLibrary uniqueInstance mediaPlayerGetMedia: self
 ]
@@ -17,4 +17,9 @@ VLCMediaPlayer >> pause [
 { #category : #api }
 VLCMediaPlayer >> play [
 	VLCLibrary uniqueInstance mediaPlayerPlay: self
+]
+
+{ #category : #api }
+VLCMediaPlayer >> stop [
+	VLCLibrary uniqueInstance mediaPlayerStop: self
 ]

@@ -546,9 +546,15 @@ VLCLibrary >> mediaListPlayerRetain: aVLCMediaListPlayer [
 ]
 
 { #category : #'media list player' }
+VLCLibrary >> mediaListPlayerStop: aMediaListPlayer [
+	"Stop playing media list."
+	^ self ffiCall: 'void libvlc_media_list_player_stop (VLCMediaListPlayer * aMediaListPlayer)'
+]
+
+{ #category : #'media list player - deprecated' }
 VLCLibrary >> mediaListPlayerStopAsync: aMediaListPlayer [
 	"Stop playing media list."
-	^ self ffiCall: 'void libvlc_media_list_player_stop_async (VLCMediaListPlayer * aMediaListPlayer)'
+	^ self mediaListPlayerStop: aMediaListPlayer
 ]
 
 { #category : #'media list' }
@@ -646,8 +652,13 @@ VLCLibrary >> mediaPlayerPlay: aMediaPlayer [
 ]
 
 { #category : #'media player' }
+VLCLibrary >> mediaPlayerStop: aMediaPlayer [
+	^ self ffiCall: 'int libvlc_media_player_stop(VLCMediaPlayer * aMediaPlayer);'
+]
+
+{ #category : #'media player - deprecated' }
 VLCLibrary >> mediaPlayerStopAsync: aMediaPlayer [
-	^ self ffiCall: 'int libvlc_media_player_stop_async(VLCMediaPlayer * aMediaPlayer);'
+	^ self mediaPlayerStop: aMediaPlayer
 ]
 
 { #category : #media }

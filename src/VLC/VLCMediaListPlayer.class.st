@@ -80,8 +80,13 @@ VLCMediaListPlayer >> state [
 ]
 
 { #category : #api }
+VLCMediaListPlayer >> stop [
+	VLCLibrary uniqueInstance mediaListPlayerStop: self
+]
+
+{ #category : #'api - deprecated' }
 VLCMediaListPlayer >> stopAsync [
-	VLCLibrary uniqueInstance mediaListPlayerStopAsync: self
+	self stop
 ]
 
 { #category : #meta }

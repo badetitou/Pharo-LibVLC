@@ -32,6 +32,11 @@ VLCInstance >> createMediaListPlayer [
 ]
 
 { #category : #creation }
+VLCInstance >> createMediaPlayerFromMedia: aVLCMedia [
+	^ VLCLibrary uniqueInstance mediaPlayerNewFromMedia: aVLCMedia
+]
+
+{ #category : #creation }
 VLCInstance >> vlcRelease [
 	^ VLCLibrary uniqueInstance release: self
 ]

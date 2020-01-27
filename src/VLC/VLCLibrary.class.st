@@ -274,6 +274,30 @@ VLCLibrary >> media: aVLCMedia setUserData: pUserData [
 	^ self ffiCall: 'void libvlc_media_set_user_data (VLCMedia * aVLCMedia, void * pUserData)'
 ]
 
+{ #category : #media }
+VLCLibrary >> media: aVLCMedia slaveGet: slaves [
+	"Get a media descriptor's slave list.
+
+vlc := VLCLibrary uniqueInstance createVLCInstance.
+media := vlc createMediaFromPath: '/home/badetitou/Vidéos/Spider-Man.Into.the.Spider-Verse.2018.MULTI.TRUEFRENCH.1080p.BluRay.DTS-HDMA.x264-EXTREME.mkv'.
+mediaPlayer := vlc createMediaPlayerFromMedia: media.
+media parseLocal.
+media parseStatus.
+
+arr := ExternalAddress allocate: ExternalAddress wordSize.
+nb := VLCLibrary uniqueInstance media: media slaveGet: arr.
+a := (FFIExternalArray fromHandle: arr getHandle type: 'VLCMediaSlave *' size: nb).
+
+desc := VLCMediaDiscovererDescription fromHandle: (a at: 3) getHandle.
+desc psz_longname readString.
+desc psz_name readString.
+	
+	
+	"
+
+	^ self ffiCall: 'int libvlc_media_slaves_get ( VLCMedia * aVLCMedia, void * * slaves )'
+]
+
 { #category : #'media discovery' }
 VLCLibrary >> mediaDiscovererIsRunning: aVLCMediaDiscoverer [
 	"Query if media service discover object is running."

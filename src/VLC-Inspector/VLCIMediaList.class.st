@@ -25,7 +25,7 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #VLCIMediaListPlayer,
+	#name : #VLCIMediaList,
 	#superclass : #StInspection,
 	#instVars : [
 		'actionBar',
@@ -36,31 +36,19 @@ Class {
 }
 
 { #category : #specs }
-VLCIMediaListPlayer class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		add: #progressBar;
-		addLast: #actionBar
-			expand: false
-			fill: false
-			padding: 0
+VLCIMediaList class >> defaultSpec [
+	^ SpBoxLayout newHorizontal
+		add: #list;
+		yourself
 ]
 
 { #category : #initialization }
-VLCIMediaListPlayer >> initializePresenters [
-	actionBar := self newActionBar
-		add:
-			(self newButton
-				label: 'Play';
-				help: 'Play.';
-				action: [ self model play ];
-				yourself);
-		add:
-			(self newButton
-				label: 'Pause';
-				help: 'Pause.';
-				action: [ self model pause ];
-				yourself);
-		yourself.
-	progressBar := self newProgressBar.
-	progressBar progress: [ self model mediaPlayer position ] every: 0.5 second
+VLCIMediaList >> initializePresenters [
+	| col |
+	col := OrderedCollection new.
+	0 to: self model count -1 do: [ :index | col add: (self model mediaAt: index) ].
+	list := self newList.
+	list
+		items: col;
+		display: [ :media | media title ]
 ]

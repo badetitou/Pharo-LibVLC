@@ -701,7 +701,7 @@ VLCLibrary >> mediaPlayerPlay: aMediaPlayer [
 
 { #category : #'media player' }
 VLCLibrary >> mediaPlayerStop: aMediaPlayer [
-	^ self ffiCall: 'int libvlc_media_player_stop(VLCMediaPlayer * aMediaPlayer);'
+	^ self ffiCall: 'int libvlc_media_player_stop(VLCMediaPlayer * aMediaPlayer)'
 ]
 
 { #category : #'media player - deprecated' }

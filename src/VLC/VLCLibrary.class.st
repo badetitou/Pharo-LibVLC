@@ -803,7 +803,7 @@ VLCLibrary >> setUserAgent: aVLCInstance name: id http: version [
 
 { #category : #'media player' }
 VLCLibrary >> setXWindows: indentifier forMediaPlayer: aMediaPlayer [
-	^ self ffiCall: 'void libvlc_media_player_set_xwindow(VLCMediaPlayer * aMediaPlayer, int indentifier);'
+	^ self ffiCall: 'void libvlc_media_player_set_xwindow(VLCMediaPlayer * aMediaPlayer, int indentifier)'
 ]
 
 { #category : #'accessing platform' }

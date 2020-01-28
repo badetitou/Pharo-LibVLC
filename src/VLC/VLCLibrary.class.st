@@ -733,6 +733,42 @@ VLCLibrary >> mediaPlayerToggleFullscreen: aVLCMediaPlayer [
 	^ self ffiCall: 'void libvlc_toggle_fullscreen (VLCMediaPlayer * aVLCMediaPlayer)'
 ]
 
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideo: aVLCMediaPlayer setSpu: spuNumber [ 
+	"Get current video subtitle."
+	^ self ffiCall: 'int libvlc_video_get_spu (VLCMediaPlayer * aVLCMediaPlayer, int spuNumber)'
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideo: aVLCMediaPlayer setSpuDelay: aDelay [
+	"Get the number of available video subtitles."
+	^ self ffiCall: 'int64 libvlc_video_get_spu_delay (VLCMediaPlayer * aVLCMediaPlayer, int64 aDelay)'
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideoGetSpu: aVLCMediaPlayer [
+	"Get current video subtitle."
+	^ self ffiCall: 'int libvlc_video_get_spu (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideoGetSpuCount: aVLCMediaPlayer [
+	"Get the number of available video subtitles."
+	^ self ffiCall: 'int libvlc_video_get_spu_count (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideoGetSpuDelay: aVLCMediaPlayer [
+	"Get the number of available video subtitles."
+	^ self ffiCall: 'int64 libvlc_video_get_spu_delay (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideoGetSpuDescription: aVLCMediaPlayer [
+	"Get the number of available video subtitles."
+	^ self ffiCall: 'VLCTrackDescription * libvlc_video_get_spu_description (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
 { #category : #media }
 VLCLibrary >> mediaRelease: aVLCMedia [
 	"Decrement the reference count of a media descriptor object."

@@ -23,3 +23,13 @@ VLCMediaPlayer >> play [
 VLCMediaPlayer >> stop [
 	VLCLibrary uniqueInstance mediaPlayerStop: self
 ]
+
+{ #category : #api }
+VLCMediaPlayer >> toggleFullscreen [
+	VLCLibrary uniqueInstance mediaPlayerToggleFullscreen: self
+]
+
+{ #category : #api }
+VLCMediaPlayer >> toggleMute [
+	VLCLibrary uniqueInstance mediaPlayerAudioToggleMute: self
+]

@@ -677,10 +677,22 @@ VLCLibrary >> mediaPlayer: aMediaPlayer setMedia: aVLCMedia [
 ]
 
 { #category : #'audio controls' }
+VLCLibrary >> mediaPlayerAudio: aVLCMediaPlayer setMute: mute [
+	"Get current mute status."
+	^ self ffiCall: 'Boolean libvlc_audio_set_mute (VLCMediaPlayer * aVLCMediaPlayer, int mute)'
+]
+
+{ #category : #'audio controls' }
 VLCLibrary >> mediaPlayerAudio: aVLCMediaPlayer setTrack: idTrack [
 	"Set current audio track."
 
 	^ self ffiCall: 'int libvlc_audio_set_track (VLCMediaPlayer * aVLCMediaPlayer, int idTrack)'
+]
+
+{ #category : #'audio controls' }
+VLCLibrary >> mediaPlayerAudioGetMute: aVLCMediaPlayer [
+	"Get current mute status."
+	^ self ffiCall: 'Boolean libvlc_audio_get_mute (VLCMediaPlayer * aVLCMediaPlayer)'
 ]
 
 { #category : #'audio controls' }
@@ -699,6 +711,12 @@ VLCLibrary >> mediaPlayerAudioGetTrackCount: aVLCMediaPlayer [
 VLCLibrary >> mediaPlayerAudioGetTrackDescription: aVLCMediaPlayer [
 	"Get the description of available audio tracks."
 	^ self ffiCall: 'VLCTrackDescription * libvlc_audio_get_track_description (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'audio controls' }
+VLCLibrary >> mediaPlayerAudioToggleMute: aVLCMediaPlayer [
+	"Toggle mute status."
+	^ self ffiCall: 'void libvlc_audio_toggle_mute (VLCMediaPlayer * aVLCMediaPlayer)'
 ]
 
 { #category : #'video controls' }

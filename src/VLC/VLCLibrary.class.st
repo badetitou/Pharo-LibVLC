@@ -676,6 +676,31 @@ VLCLibrary >> mediaPlayer: aMediaPlayer setMedia: aVLCMedia [
 	^ self ffiCall: 'void libvlc_media_player_get_media (VLCMediaPlayer * aMediaPlayer, VLCMedia * aVLCMedia)'
 ]
 
+{ #category : #'audio controls' }
+VLCLibrary >> mediaPlayerAudio: aVLCMediaPlayer setTrack: idTrack [
+	"Set current audio track."
+
+	^ self ffiCall: 'int libvlc_audio_get_track_description (VLCMediaPlayer * aVLCMediaPlayer, int idTrack)'
+]
+
+{ #category : #'audio controls' }
+VLCLibrary >> mediaPlayerAudioGetTrack: aVLCMediaPlayer [
+	"Get current audio track."
+	^ self ffiCall: 'int libvlc_audio_get_track (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'audio controls' }
+VLCLibrary >> mediaPlayerAudioGetTrackCount: aVLCMediaPlayer [
+	"Get number of available audio tracks."
+	^ self ffiCall: 'int libvlc_audio_get_track_count (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'audio controls' }
+VLCLibrary >> mediaPlayerAudioGetTrackDescription: aVLCMediaPlayer [
+	"Get the description of available audio tracks."
+	^ self ffiCall: 'VLCTrackDescription * libvlc_audio_get_track_description (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
 { #category : #'video controls' }
 VLCLibrary >> mediaPlayerGetFullscreen: aVLCMediaPlayer [
 

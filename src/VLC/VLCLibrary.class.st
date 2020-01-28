@@ -665,9 +665,21 @@ VLCLibrary >> mediaParseStop: aVLCMedia [
 	^ self ffiCall: 'void libvlc_media_parse_stop (VLCMedia * aVLCMedia)'
 ]
 
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayer: aVLCMediaPlayer setFullscreen: aBoolean [
+
+	^ self ffiCall: 'void libvlc_set_fullscreen (VLCMediaPlayer * aVLCMediaPlayer, Boolean aBoolean)'
+]
+
 { #category : #'media player' }
 VLCLibrary >> mediaPlayer: aMediaPlayer setMedia: aVLCMedia [
 	^ self ffiCall: 'void libvlc_media_player_get_media (VLCMediaPlayer * aMediaPlayer, VLCMedia * aVLCMedia)'
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerGetFullscreen: aVLCMediaPlayer [
+
+	^ self ffiCall: 'Boolean libvlc_get_fullscreen (VLCMediaPlayer * aVLCMediaPlayer)'
 ]
 
 { #category : #'media player' }
@@ -713,6 +725,12 @@ VLCLibrary >> mediaPlayerStop: aMediaPlayer [
 { #category : #'media player - deprecated' }
 VLCLibrary >> mediaPlayerStopAsync: aMediaPlayer [
 	^ self mediaPlayerStop: aMediaPlayer
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerToggleFullscreen: aVLCMediaPlayer [
+
+	^ self ffiCall: 'void libvlc_toggle_fullscreen (VLCMediaPlayer * aVLCMediaPlayer)'
 ]
 
 { #category : #media }

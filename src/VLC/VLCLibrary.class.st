@@ -295,7 +295,7 @@ desc psz_name readString.
 	
 	"
 
-	^ self ffiCall: 'int libvlc_media_slaves_get ( VLCMedia * aVLCMedia, void * * slaves )'
+	^ self ffiCall: #(int libvlc_media_slaves_get ( VLCMedia * aVLCMedia , void * * slaves ))
 ]
 
 { #category : #'media discovery' }

@@ -20,6 +20,18 @@ VLCMedia >> duration [
 ]
 
 { #category : #acccessing }
+VLCMedia >> getSlaves [
+	| arr nb a |
+	arr := ExternalAddress allocate: ExternalAddress wordSize.
+	nb := VLCLibrary uniqueInstance media: self slaveGet: arr.
+	a := FFIExternalArray
+		     fromHandle: arr getHandle
+		     type: 'VLCMediaSlave *'
+		     size: nb.
+	^ a
+]
+
+{ #category : #acccessing }
 VLCMedia >> mrl [
 	^ VLCLibrary uniqueInstance mediaGetMRL: self
 ]

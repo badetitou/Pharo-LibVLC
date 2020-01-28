@@ -6,7 +6,7 @@ Class {
 
 { #category : #api }
 VLCMediaPlayer >> getMedia [
-	VLCLibrary uniqueInstance mediaPlayerGetMedia: self
+	^ VLCLibrary uniqueInstance mediaPlayerGetMedia: self
 ]
 
 { #category : #api }

@@ -298,6 +298,12 @@ desc psz_name readString.
 	^ self ffiCall: #(int libvlc_media_slaves_get ( VLCMedia * aVLCMedia , void * * slaves ))
 ]
 
+{ #category : #media }
+VLCLibrary >> media: aVLCMedia slavesAddType: aSlaveType priority: priority uri: uri [
+	"Set the meta of the media (this function will not save the meta, call #mediaSaveMeta: in order to save the meta)."
+	^ self ffiCall: 'int libvlc_media_slaves_add (VLCMedia * aVLCMedia, VLCMediaSlaveType aSlaveType, uint priority, String uri)'
+]
+
 { #category : #'media discovery' }
 VLCLibrary >> mediaDiscovererIsRunning: aVLCMediaDiscoverer [
 	"Query if media service discover object is running."

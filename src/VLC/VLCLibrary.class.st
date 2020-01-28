@@ -746,6 +746,12 @@ VLCLibrary >> mediaPlayerVideo: aVLCMediaPlayer setSpuDelay: aDelay [
 ]
 
 { #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideo: aVLCMediaPlayer setTrack: trackId [ 
+	"Get current video track."
+	^ self ffiCall: 'int libvlc_video_set_track (VLCMediaPlayer * aVLCMediaPlayer, int trackId)'
+]
+
+{ #category : #'video controls' }
 VLCLibrary >> mediaPlayerVideoGetSpu: aVLCMediaPlayer [
 	"Get current video subtitle."
 	^ self ffiCall: 'int libvlc_video_get_spu (VLCMediaPlayer * aVLCMediaPlayer)'
@@ -767,6 +773,24 @@ VLCLibrary >> mediaPlayerVideoGetSpuDelay: aVLCMediaPlayer [
 VLCLibrary >> mediaPlayerVideoGetSpuDescription: aVLCMediaPlayer [
 	"Get the number of available video subtitles."
 	^ self ffiCall: 'VLCTrackDescription * libvlc_video_get_spu_description (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideoGetTrack: aVLCMediaPlayer [
+	"Get current video track."
+	^ self ffiCall: 'int libvlc_video_get_track (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideoGetTrackCount: aVLCMediaPlayer [
+	"Get current video track."
+	^ self ffiCall: 'int libvlc_video_get_track_count (VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'video controls' }
+VLCLibrary >> mediaPlayerVideoGetTrackDescription: aVLCMediaPlayer [
+	"Get current video track."
+	^ self ffiCall: 'VLCTrackDescription * libvlc_video_get_track_description (VLCMediaPlayer * aVLCMediaPlayer)'
 ]
 
 { #category : #media }

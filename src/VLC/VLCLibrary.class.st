@@ -736,7 +736,7 @@ VLCLibrary >> mediaPlayerToggleFullscreen: aVLCMediaPlayer [
 { #category : #'video controls' }
 VLCLibrary >> mediaPlayerVideo: aVLCMediaPlayer setSpu: spuNumber [ 
 	"Get current video subtitle."
-	^ self ffiCall: 'int libvlc_video_get_spu (VLCMediaPlayer * aVLCMediaPlayer, int spuNumber)'
+	^ self ffiCall: 'int libvlc_video_set_spu (VLCMediaPlayer * aVLCMediaPlayer, int spuNumber)'
 ]
 
 { #category : #'video controls' }

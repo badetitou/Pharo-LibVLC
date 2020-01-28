@@ -676,6 +676,19 @@ VLCLibrary >> mediaPlayer: aMediaPlayer setMedia: aVLCMedia [
 	^ self ffiCall: 'void libvlc_media_player_get_media (VLCMediaPlayer * aMediaPlayer, VLCMedia * aVLCMedia)'
 ]
 
+{ #category : #'media player' }
+VLCLibrary >> mediaPlayer: aMediaPlayer setPosition: position fast: fast [
+	"Set movie position as percentage between 0.0 and 1.0.
+
+This has no effect if playback is not enabled. This might not work depending on the underlying input format and protocol.
+
+Parameters
+    p_mi	the Media Player
+    b_fast	prefer fast seeking or precise seeking
+    f_pos	the position "
+	^ self ffiCall: 'int libvlc_media_player_set_position (VLCMediaPlayer * aMediaPlayer, float position, bool fast)'
+]
+
 { #category : #'audio controls' }
 VLCLibrary >> mediaPlayerAudio: aVLCMediaPlayer setMute: mute [
 	"Get current mute status."
@@ -728,6 +741,12 @@ VLCLibrary >> mediaPlayerGetFullscreen: aVLCMediaPlayer [
 { #category : #'media player' }
 VLCLibrary >> mediaPlayerGetMedia: aMediaPlayer [
 	^ self ffiCall: 'VLCMedia * libvlc_media_player_get_media (VLCMediaPlayer * aMediaPlayer)'
+]
+
+{ #category : #'media player' }
+VLCLibrary >> mediaPlayerGetPosition: aMediaPlayer [
+	"Get movie position as percentage between 0.0 and 1.0."
+	^ self ffiCall: 'float libvlc_media_player_get_position (VLCMediaPlayer * aMediaPlayer)'
 ]
 
 { #category : #'media player' }

@@ -20,6 +20,11 @@ VLCMediaPlayer >> play [
 ]
 
 { #category : #api }
+VLCMediaPlayer >> position [
+	^ VLCLibrary uniqueInstance mediaPlayerGetPosition: self
+]
+
+{ #category : #api }
 VLCMediaPlayer >> stop [
 	VLCLibrary uniqueInstance mediaPlayerStop: self
 ]

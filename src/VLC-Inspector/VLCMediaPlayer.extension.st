@@ -2,7 +2,7 @@ Extension { #name : #VLCMediaPlayer }
 
 { #category : #'*VLC-Inspector' }
 VLCMediaPlayer >> vlcInspection [
-	<inspectorPresentationOrder: 999 title: 'View'>
+	<inspectorPresentationOrder: -2 title: 'Media Player'>
 
 	^ VLCIMediaPlayer on: self
 ]

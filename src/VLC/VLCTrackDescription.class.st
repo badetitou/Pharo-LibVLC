@@ -70,7 +70,7 @@ VLCTrackDescription >> printOn: aStream [
 				<< '(';
 				print: self i_id;
 				<< ')';
-				print: self psz_name ]
+				print: self psz_name readString ]
 		ifTrue: [ aStream << 'nil' ]
 ]
 
@@ -91,5 +91,5 @@ VLCTrackDescription >> vlcExtensionTrackDescription: composite [
 	<gtInspectorPresentationOrder: 0>
 	composite list
 		title: 'Track Description';
-		display: [ {self i_id . self psz_name . (self p_next isNull ifTrue: [ nil ] ifFalse: [ self p_next ])} ]
+		display: [ {self i_id . self psz_name readString . (self p_next isNull ifTrue: [ nil ] ifFalse: [ self p_next ])} ]
 ]

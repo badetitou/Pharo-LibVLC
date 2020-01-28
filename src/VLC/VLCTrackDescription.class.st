@@ -64,6 +64,17 @@ VLCTrackDescription >> p_next: anObject [
 ]
 
 { #category : #'accessing structure variables' }
+VLCTrackDescription >> printOn: aStream [
+	handle isNull
+		ifFalse: [ aStream
+				<< '(';
+				print: self i_id;
+				<< ')';
+				print: self psz_name ]
+		ifTrue: [ aStream << 'nil' ]
+]
+
+{ #category : #'accessing structure variables' }
 VLCTrackDescription >> psz_name [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_PSZ_NAME) type: ExternalType char asPointerType
@@ -73,4 +84,12 @@ VLCTrackDescription >> psz_name [
 VLCTrackDescription >> psz_name: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_PSZ_NAME put: anObject getHandle.
+]
+
+{ #category : #'inspector extensions' }
+VLCTrackDescription >> vlcExtensionTrackDescription: composite [
+	<gtInspectorPresentationOrder: 0>
+	composite list
+		title: 'Track Description';
+		display: [ {self i_id . self psz_name . (self p_next isNull ifTrue: [ nil ] ifFalse: [ self p_next ])} ]
 ]

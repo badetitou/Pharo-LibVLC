@@ -680,7 +680,7 @@ VLCLibrary >> mediaPlayer: aMediaPlayer setMedia: aVLCMedia [
 VLCLibrary >> mediaPlayerAudio: aVLCMediaPlayer setTrack: idTrack [
 	"Set current audio track."
 
-	^ self ffiCall: 'int libvlc_audio_get_track_description (VLCMediaPlayer * aVLCMediaPlayer, int idTrack)'
+	^ self ffiCall: 'int libvlc_audio_set_track (VLCMediaPlayer * aVLCMediaPlayer, int idTrack)'
 ]
 
 { #category : #'audio controls' }

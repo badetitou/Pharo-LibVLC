@@ -734,6 +734,16 @@ VLCLibrary >> mediaSaveMeta: aVLCMedia [
 ]
 
 { #category : #media }
+VLCLibrary >> mediaSlavesClear: aVLCMedia [
+	^ self ffiCall: 'void libvlc_media_slaves_clear (VLCMedia * aVLCMedia)'
+]
+
+{ #category : #media }
+VLCLibrary >> mediaSlavesRelease: slaves ofSize: count [
+	^ self ffiCall: 'void libvlc_media_slaves_release (libvlc_media_slave_t ** slaves, uint count)'
+]
+
+{ #category : #media }
 VLCLibrary >> mediaSubitems: aVLCMedia [
 	"Get subitems of media descriptor object."
 	^ self ffiCall: 'VLCMediaList * libvlc_media_subitems (VLCMedia * aVLCMedia)'

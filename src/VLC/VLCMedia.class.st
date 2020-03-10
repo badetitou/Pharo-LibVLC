@@ -52,6 +52,16 @@ VLCMedia >> parseWithOption: aVLCMediaParseFlag timeout: aTimeOut [
 ]
 
 { #category : #acccessing }
+VLCMedia >> saveMeta [
+	^ VLCLibrary uniqueInstance mediaSaveMeta: self
+]
+
+{ #category : #acccessing }
+VLCMedia >> setMeta: aVLCMeta with: newMetaValue [
+	^ VLCLibrary uniqueInstance media: self setMeta: aVLCMeta with: newMetaValue
+]
+
+{ #category : #acccessing }
 VLCMedia >> title [
 	^ VLCLibrary uniqueInstance media: self getMeta: VLCMetaT libvlc_meta_Title
 ]

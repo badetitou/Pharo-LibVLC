@@ -9,8 +9,7 @@ Class {
 { #category : #tests }
 VLCLibraryTest >> testInstanceNewClass [
 	| vlc |
-	vlc := VLCLibrary uniqueInstance createVLCWithArguments:
-		       { '--intf'. 'dummy' }.
+	vlc := VLCLibrary uniqueInstance createVLCInstanceWithoutVideo.
 	self assert: vlc class equals: VLCInstance
 ]
 

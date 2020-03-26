@@ -20,7 +20,7 @@ Class {
 VLCLibraryMediaTest >> setUp [
 	super setUp.
 	path := (self resourcesFileReference / 'Open.mp3') fullName.
-	vlc := VLCLibrary uniqueInstance createVLCInstance.
+	vlc := VLCLibrary uniqueInstance createVLCInstanceWithoutVideo.
 	media := vlc createMediaFromPath: path.
 	returnParse :=  media parseLocal.
 	self assert: returnParse equals: 0.

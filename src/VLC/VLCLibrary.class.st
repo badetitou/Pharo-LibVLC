@@ -103,6 +103,11 @@ VLCLibrary >> createVLCInstance [
 ]
 
 { #category : #initialization }
+VLCLibrary >> createVLCInstanceWithoutVideo [
+	^ VLCLibrary uniqueInstance createVLCWithArguments: {'--novideo'}.
+]
+
+{ #category : #initialization }
 VLCLibrary >> createVLCWithArguments: aCollectionOfString [
 	"colArguments := OrderedCollection new.
 	colArguments add: '--novideo'.

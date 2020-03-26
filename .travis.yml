@@ -4,8 +4,8 @@ dist: bionic
 before_install:
   - sudo apt install libvlc-dev libvlccore-dev
   - export PATH=$PATH:/usr/lib
-  - whereis libvlc
-  - whereis libvlccore
+  - ls -l `whereis libvlc | cut -d' ' -f2`
+  - ls -l `whereis libvlccore | cut -d' ' -f2`
 addons:
   apt:
     update: true

@@ -1,5 +1,5 @@
 language: smalltalk
-
+dist: bionic
 
 before_install:
   - sudo apt install libvlc-dev libvlccore-dev

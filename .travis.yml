@@ -1,6 +1,20 @@
 language: smalltalk
 sudo: false
 
+
+before_install:
+  - apt install libvlc-dev libvlccore-dev
+  - export PATH=$PATH:/usr/lib
+  - whereis libvlc
+  - ls -l /usr/lib/x86_64-linux-gnu/libvlc.so
+  - whereis libvlccore
+  - ls -l /usr/lib/x86_64-linux-gnu/libvlccore.so
+  - ls
+  - pwd
+addons:
+  apt:
+    update: true
+
 os:
 - linux
 

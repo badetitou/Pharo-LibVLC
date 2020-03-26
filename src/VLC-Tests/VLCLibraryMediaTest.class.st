@@ -32,14 +32,9 @@ VLCLibraryMediaTest >> setUp [
 
 { #category : #tests }
 VLCLibraryMediaTest >> tearDown [
-	media vlcRelease.
-	vlc vlcRelease.
+"	media vlcRelease.
+	vlc vlcRelease."
 	super tearDown
-]
-
-{ #category : #tests }
-VLCLibraryMediaTest >> testParseArtist [
-	self assert: media artist equals: 'badetitou'
 ]
 
 { #category : #tests }

@@ -2,10 +2,7 @@ SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
       #baseline : 'VLC',
-      #directory : 'src',
-      #platforms : [ #pharo ],
-      #onConflict : #useIncoming,
-      #onUpgrade : #useIncoming
+      #directory : 'src'
     }
   ],
   #preTesting : SCICustomScript {

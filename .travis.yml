@@ -3,7 +3,6 @@ dist: bionic
 
 os:
 - linux
-- osx
 
 before_install:
   - . ci/before_install.sh

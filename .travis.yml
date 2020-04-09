@@ -3,7 +3,6 @@ dist: bionic
 
 before_install:
   - . ci/before_install.sh
-  - sudo apt install libvlc-dev libvlccore-dev
   - export PATH=$PATH:/usr/lib
   - ls -l `whereis libvlc | cut -d' ' -f2`
   - ls -l `whereis libvlccore | cut -d' ' -f2`
@@ -11,6 +10,10 @@ before_install:
 addons:
   apt:
     update: true
+    packages:
+      - libvlc-dev
+      - libvlccore-dev
+      - vlc
 
 os:
 - linux

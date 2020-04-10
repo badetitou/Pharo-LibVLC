@@ -10,6 +10,6 @@ Class {
 { #category : #test }
 VLCInstanceTest >> testCreateMediaList [
 	| vlc |
-	vlc := VLCLibrary uniqueInstance createVLCInstanceWithoutVideo."
-	self assert: vlc createMediaList class equals: VLCMediaList"
+	vlc := VLCLibrary uniqueInstance createVLCInstanceWithoutVideo.
+	self assert: vlc createMediaList class equals: VLCMediaList
 ]

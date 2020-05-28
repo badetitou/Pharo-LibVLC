@@ -8,8 +8,16 @@ Class {
 }
 
 { #category : #'callback spec' }
+VLCSDLUnlock class >> defaultOn [
+	^ self
+		on: [ :context :id :p_pixels | 
+			context texture unlock.
+			context mutex unlock ]
+]
+
+{ #category : #'callback spec' }
 VLCSDLUnlock class >> fnSpec [
-	^ #(void unlock(void *data, void *id, void **p_pixels))
+	^ #(void #(VLCSDLContext * data , void * id , void ** p_pixels))
 ]
 
 { #category : #'callback spec' }

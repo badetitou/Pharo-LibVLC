@@ -8,8 +8,19 @@ Class {
 }
 
 { #category : #'callback spec' }
+VLCSDLLock class >> defaultOn [
+	^ self
+		on: [ :context :p_pixels | 
+			| pitch |
+			context mutex lock.
+			pitch := FFIExternalValueHolder ofType: 'int'.
+			context texture lockPixels: p_pixels pitch: pitch.
+			nil ]
+]
+
+{ #category : #'callback spec' }
 VLCSDLLock class >> fnSpec [
-	^ #(void * (void * data, void ** p_pixels))
+	^ #(void * #(VLCSDLContext * data , void ** p_pixels))
 ]
 
 { #category : #'callback spec' }

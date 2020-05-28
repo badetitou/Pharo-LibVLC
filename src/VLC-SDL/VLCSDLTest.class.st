@@ -34,6 +34,17 @@ VLCSDLTest >> createTextureForRenderer: aRenderer [
 		height: self videoheight
 ]
 
+{ #category : #'as yet unclassified' }
+VLCSDLTest >> createWindow [
+	^ SDL2
+		createWindow: 'Fartplayer'
+		x: SDL_WINDOWPOS_UNDEFINED
+		y: SDL_WINDOWPOS_UNDEFINED
+		width: self width 
+		height: self height
+		flags: SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+]
+
 { #category : #accessing }
 VLCSDLTest >> getDisplayCallback [
 	^ VLCVideoDisplayCallback

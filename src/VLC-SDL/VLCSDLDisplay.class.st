@@ -10,11 +10,12 @@ Class {
 { #category : #'callback spec' }
 VLCSDLDisplay class >> defaultOn [
 	^ self
-		on: [ :context :id | 
-			| rect |
+		on: [ :data :id | 
+			| rect context |
+			context := VLCSDLContext fromHandle: data getHandle.
 			rect := SDL_Rect
-				newX: (1 + (0.5 * (0.03 * context n) sin)) * (640 - 320) / 2
-				y: (1 + (0.5 * (0.03 * context n) cos)) * (480 - 240) / 2
+				newX: (1 + (0.5 * (0.03 * data n) sin)) * (640 - 320) / 2
+				y: (1 + (0.5 * (0.03 * data n) cos)) * (480 - 240) / 2
 				w: 320
 				h: 240.
 

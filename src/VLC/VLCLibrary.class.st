@@ -975,13 +975,13 @@ VLCLibrary >> unix64LibraryName [
 VLCLibrary >> videoSetCallbacksMediaPlayer: aMediaPlayer lockCallback: lock unlockCallback: unlock displayCallback: display opaque: opaque [
 	"Set callbacks and private data to render decoded video to a custom area in memory."
 
-	^ self ffiCall: 'void libvlc_video_set_callbacks (VLCMediaPlayer * aMediaPlayer, VLCVideoLockCallback lock, VLCVideoUnlockCallback unlock, VLCVideoDisplayCallback display, VLCSDLContext * opaque)'
+	^ self ffiCall: 'void libvlc_video_set_callbacks (VLCMediaPlayer * aMediaPlayer, VLCSDLLock lock, VLCSDLUnlock unlock, VLCSDLDisplay display, VLCSDLContext * opaque)'
 ]
 
 { #category : #'media player' }
 VLCLibrary >> videoSetFormatMediaPlayer: mp chroma: chroma width: width height: height pitch: pitch [
 
-	^ self ffiCall: 'void libvlc_video_set_format (VLCMediaPlayer * mp, const String chroma, int width, int height, int pitch)'
+	^ self ffiCall: 'void libvlc_video_set_format (VLCMediaPlayer * mp, String chroma, int width, int height, int pitch)'
 ]
 
 { #category : #'accessing platform' }

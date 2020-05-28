@@ -10,7 +10,9 @@ Class {
 { #category : #'callback spec' }
 VLCSDLUnlock class >> defaultOn [
 	^ self
-		on: [ :context :id :p_pixels | 
+		on: [ :data :id :p_pixels | 
+			| context |
+			context := VLCSDLContext fromHandle: data getHandle.
 			context texture unlock.
 			context mutex unlock ]
 ]

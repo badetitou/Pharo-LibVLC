@@ -13,9 +13,9 @@ VLCSDLLock class >> defaultOn [
 		on: [ :data :p_pixels | 
 			| pitch context |
 			context := VLCSDLContext fromHandle: data getHandle.
-			context mutex lock.
+			(SDL_Mutex fromHandle: context mutex getHandle) lock.
 			pitch := FFIExternalValueHolder ofType: 'int'.
-			context texture lockPixels: p_pixels pitch: pitch.
+			(SDL_Texture fromHandle: context texture getHandle) lockPixels: p_pixels pitch: pitch.
 			ExternalAddress null ]
 ]
 

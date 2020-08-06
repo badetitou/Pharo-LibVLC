@@ -22,16 +22,21 @@ BaselineOfVLC >> baseline: spec [
 
 { #category : #baselines }
 BaselineOfVLC >> defineDependencies: spec [
-	spec baseline: 'GitBridge' with: [ spec repository: 'github://jecisc/GitBridge:v1.x.x/src' ]
+	spec baseline: 'GitBridge' with: [ spec repository: 'github://jecisc/GitBridge:v1.x.x/src' ].
+	spec baseline: 'NewTools' with: [ spec repository: 'github://pharo-spec/NewTools:v0.4.2.2/src' ]
 ]
 
 { #category : #baselines }
 BaselineOfVLC >> defineGroups: spec [
+	spec
+		group: 'default' with: #('VLC' 'VLC-Tests');
+		group: 'inspector' with: #('default' 'VLC-Inspector')
 ]
 
 { #category : #baselines }
 BaselineOfVLC >> definePackages: spec [
 	spec
 		package: 'VLC' with: [ spec requires: #('GitBridge')];
-		package: 'VLC-Tests' with: [ spec requires: #('VLC') ]
+		package: 'VLC-Tests' with: [ spec requires: #('VLC') ];
+		package: 'VLC-Inspector' with: [ spec requires: #('NewTools') ]
 ]

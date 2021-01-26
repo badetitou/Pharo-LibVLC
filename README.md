@@ -32,8 +32,10 @@ To do so, you can execute `whereis libvlc` and `whereis libvlccore`.
 If the `whereis` command return something like:
 
 - `libvlccore: /usr/lib/libvlccore.so` → OK
-- `libvlccore: ` → It means you didn't install correctly the libraries
+- `libvlccore: ` → It means you didn't install correctly the libraries, or you used snap.
 - `libvlccore: /usr/lib/libvlccore.so.x` → It means you've installed a specific version of the library. To use it with pharo please create a symbolic link without the ".x" → `ln -s /usr/lib/libvlccore.so.x /usr/lib/libvlccore.so`
+
+If you used snap to install vlc, the path might be ` '/snap/vlc/current/usr/lib'`
 
 
 ## Quick example

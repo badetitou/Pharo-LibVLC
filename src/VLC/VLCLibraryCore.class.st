@@ -55,7 +55,7 @@ VLCLibraryCore >> macLibraryName [
 
 { #category : #'accessing platform' }
 VLCLibraryCore >> unix32LibraryName [
-	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')
+	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib' '/snap/vlc/current/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')
 		do: [ :path | 
 			| libraryPath |
 			libraryPath := path asFileReference / 'libvlccore.so'.
@@ -65,7 +65,7 @@ VLCLibraryCore >> unix32LibraryName [
 
 { #category : #'accessing platform' }
 VLCLibraryCore >> unix64LibraryName [
-	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')
+	#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib' '/snap/vlc/current/usr/lib') , ((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':')
 		do: [ :path | 
 			| libraryPath |
 			libraryPath := path asFileReference / 'libvlccore.so'.

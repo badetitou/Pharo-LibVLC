@@ -26,7 +26,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : #VLCIMediaList,
-	#superclass : #StInspection,
+	#superclass : #SpPresenterWithModel,
 	#instVars : [
 		'actionBar',
 		'progressBar',
@@ -44,11 +44,24 @@ VLCIMediaList >> defaultLayout [
 
 { #category : #initialization }
 VLCIMediaList >> initializePresenters [
-	| col |
-	col := OrderedCollection new.
-	0 to: self model count -1 do: [ :index | col add: (self model mediaAt: index) ].
+
 	list := self newList.
 	list
-		items: col;
+		items: {};
 		display: [ :media | media title ]
+]
+
+{ #category : #initialization }
+VLCIMediaList >> modelChanged [
+
+	"subclass responsibility (optional)"
+
+	| col |
+	col := OrderedCollection new.
+	self model ifNotNil: [ 
+		0 to: self model count - 1 do: [ :index | 
+		col add: (self model mediaAt: index) ] ].
+	list
+		items: col;
+		updateList
 ]

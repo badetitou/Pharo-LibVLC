@@ -1,6 +1,9 @@
 Class {
 	#name : #VLCMediaListPlayer,
 	#superclass : #FFIOpaqueObject,
+	#instVars : [
+		'mediaList'
+	],
 	#category : #'VLC-Structure'
 }
 
@@ -15,8 +18,18 @@ VLCMediaListPlayer >> isPlaying [
 ]
 
 { #category : #accessing }
+VLCMediaListPlayer >> mediaList [
+
+	^ mediaList
+]
+
+{ #category : #accessing }
 VLCMediaListPlayer >> mediaList: aMediaList [
-	VLCLibrary uniqueInstance mediaListPlayer: self setMediaList: aMediaList
+
+	mediaList := aMediaList.
+	VLCLibrary uniqueInstance
+		mediaListPlayer: self
+		setMediaList: aMediaList
 ]
 
 { #category : #accessing }

@@ -787,6 +787,12 @@ VLCLibrary >> mediaPlayerPlay: aMediaPlayer [
 ]
 
 { #category : #'media player' }
+VLCLibrary >> mediaPlayerRelease: aVLCMediaPlayer [
+	"Decrement the reference count of a media descriptor object."
+	^ self ffiCall: 'void libvlc_media_player_release(VLCMediaPlayer * aVLCMediaPlayer)'
+]
+
+{ #category : #'media player' }
 VLCLibrary >> mediaPlayerStop: aMediaPlayer [
 	^ self ffiCall: 'int libvlc_media_player_stop(VLCMediaPlayer * aMediaPlayer)'
 ]

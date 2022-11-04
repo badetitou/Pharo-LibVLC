@@ -38,3 +38,8 @@ VLCMediaPlayer >> toggleFullscreen [
 VLCMediaPlayer >> toggleMute [
 	VLCLibrary uniqueInstance mediaPlayerAudioToggleMute: self
 ]
+
+{ #category : #api }
+VLCMediaPlayer >> vlcRelease [
+	^ VLCLibrary uniqueInstance mediaPlayerRelease: self
+]

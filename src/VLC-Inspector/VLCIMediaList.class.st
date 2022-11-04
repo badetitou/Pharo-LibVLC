@@ -35,8 +35,8 @@ Class {
 	#category : #'VLC-Inspector'
 }
 
-{ #category : #specs }
-VLCIMediaList class >> defaultSpec [
+{ #category : #initialization }
+VLCIMediaList >> defaultLayout [
 	^ SpBoxLayout newHorizontal
 		add: #list;
 		yourself

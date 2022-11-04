@@ -35,8 +35,8 @@ Class {
 	#category : #'VLC-Inspector'
 }
 
-{ #category : #specs }
-VLCIMediaListPlayer class >> defaultSpec [
+{ #category : #initialization }
+VLCIMediaListPlayer >> defaultLayout [
 	^ SpBoxLayout newVertical
 		add: #progressBar;
 		addLast: #actionBar

@@ -8,15 +8,16 @@ Class {
 	#category : #'VLC-Inspector'
 }
 
-{ #category : #specs }
-VLCIMediaPlayer class >> defaultSpec [
+{ #category : #initialization }
+VLCIMediaPlayer >> defaultLayout [
+
 	^ SpBoxLayout newVertical
-		add: #progressBar;
-		addLast: #actionBar
-			expand: false
-			fill: false
-			padding: 0;
-		yourself
+		  add: #progressBar;
+		  addLast: #actionBar
+		  expand: false
+		  fill: false
+		  padding: 0;
+		  yourself
 ]
 
 { #category : #initialization }

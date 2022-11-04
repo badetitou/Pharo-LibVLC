@@ -101,7 +101,7 @@ On systems that support it, the POSIX monotonic clock is used."
 
 { #category : #initialization }
 VLCLibrary >> createVLCInstance [
-	^ self ffiCall: 'VLCInstance * libvlc_new()'
+	^ VLCLibrary uniqueInstance createVLCWithArguments: {}.
 ]
 
 { #category : #initialization }

@@ -6,6 +6,7 @@ When you use me:
 
 example without sugar:
 
+```
 VLCLibrary uniqueInstance getVersion.
 vlc := VLCLibrary uniqueInstance createVLCInstance.
 media := VLCLibrary uniqueInstance mediaNew: vlc path: '/home/badetitou/Musique/Coda.mp3'.
@@ -15,6 +16,7 @@ VLCLibrary uniqueInstance mediaListPlayer: mediaListPlayer setMediaList: mediaLi
 VLCLibrary uniqueInstance mediaList: mediaList addMedia: media.
 VLCLibrary uniqueInstance mediaListPlayerPlay: mediaListPlayer.
 VLCLibrary uniqueInstance mediaListPlayerPause: mediaListPlayer.
+```
 "
 Class {
 	#name : #VLCLibrary,

@@ -48,4 +48,19 @@ mediaPlayer := VLCLibrary uniqueInstance mediaPlayerNewFromMedia: media.
 mediaPlayer play
 ```
 
+Or using a media list.
+
+```st
+instance := VLCLibrary uniqueInstance createVLCInstance.
+ 
+media := instance createMediaFromPath: '/home/badetitou/Musique/Coda.mp3'.
+mediaList := instance createMediaList.
+mediaList addMedia: media.
+
+mediaListPlayer := instance createMediaListPlayer.
+mediaListPlayer mediaList: mediaList.
+mediaListPlayer mediaList.
+mediaListPlayer play
+```
+
 ## Documentation

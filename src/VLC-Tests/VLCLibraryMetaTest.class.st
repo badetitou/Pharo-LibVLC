@@ -6,5 +6,5 @@ Class {
 
 { #category : #tests }
 VLCLibraryMetaTest >> testGetVersion [
-	self assert: (VLCLibrary uniqueInstance getVersion beginsWith: '3.0.8')
+	self assert: (VLCLibrary uniqueInstance getVersion beginsWith: '3.0.17')
 ]

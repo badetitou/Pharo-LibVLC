@@ -5,7 +5,7 @@
 - [Quick example](#quick-example)
 - [Documentation](#documentation)
 
-[![Pharo version](https://img.shields.io/badge/Pharo-8.0-%23aac9ff.svg)](https://pharo.org/download)
+[![Pharo version](https://img.shields.io/badge/Pharo-11.0-%23aac9ff.svg)](https://pharo.org/download)
 
 Binding FFI of [libvlc](https://www.videolan.org/developers/vlc/doc/doxygen/html/group__libvlc.html) for [Pharo](http://pharo.org/) 
 
@@ -13,7 +13,7 @@ Binding FFI of [libvlc](https://www.videolan.org/developers/vlc/doc/doxygen/html
 
 1. Install VLC 3.x.x
 
-2. In a Pharo 8 image
+2. In a Pharo 11 image
 
 ```st
 Metacello new

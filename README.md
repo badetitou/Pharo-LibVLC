@@ -37,6 +37,9 @@ If the `whereis` command return something like:
 
 If you used snap to install vlc, the path might be ` '/snap/vlc/current/usr/lib'`
 
+### Windows
+
+Simply install the last version of VLC and it should work.
 
 ## Quick example
 
